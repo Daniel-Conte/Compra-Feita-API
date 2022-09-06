@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Pessoa {
+  codigo       Int        @id @default(autoincrement())
+  nome         String     @db.VarChar(50)
+  email        String     @unique @db.VarChar(50)
+  senha        String     @db.Text
+  telefone     String     @db.VarChar(14)
+  admin        Int        @default(0)
+  criadoEm     DateTime   @default(now())
+  atualizadoEm DateTime   @updatedAt
+  enderecos    Endereco[]
+  pedidos      Pedido[]
+}
+
+model Endereco {
+  codigo       Int      @id @default(autoincrement())
+  nome         String   @db.VarChar(50)
+  cep          String   @db.VarChar(8)
+  cidade       String   @db.VarChar(50)
+  uf           String   @db.VarChar(2)
+  bairro       String   @db.VarChar(50)
+  rua          String   @db.VarChar(50)
+  numero       String   @db.VarChar(8)
+  complemento  String?  @db.VarChar(50)
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+  pessoa       Pessoa   @relation(fields: [codigoPessoa], references: [codigo])
+  codigoPessoa Int
+  pedidos      Pedido[]
+}
+
+model Pedido {
+  codigo                    Int           @id @default(autoincrement())
+  metodoPagamento           Int
+  data                      DateTime      @default(now())
+  status                    Int           @default(0)
+  valorTotal                Float
+  justificativaCancelamento String?       @db.VarChar(200)
+  atualizadoEm              DateTime      @updatedAt
+  pessoa                    Pessoa        @relation(fields: [pessoaCodigo], references: [codigo])
+  pessoaCodigo              Int
+  endereco                  Endereco      @relation(fields: [enderecoCodigo], references: [codigo])
+  enderecoCodigo            Int
+  itensPedido               ItensPedido[]
+}
+
+model ItensPedido {
+  codigo        Int      @id @default(autoincrement())
+  quantidade    Int
+  valor         Float
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+  produto       Produto  @relation(fields: [codigoProduto], references: [codigo])
+  codigoProduto Int
+  pedido        Pedido?  @relation(fields: [codigoPedido], references: [codigo])
+  codigoPedido  Int?
+}
+
+model Produto {
+  codigo          Int             @id @default(autoincrement())
+  nome            String          @unique @db.VarChar(50)
+  descricao       String          @db.Text
+  precoUnitario   Float
+  estoque         Int
+  altura          Float?
+  comprimento     Float?
+  largura         Float?
+  marca           String?         @db.VarChar(50)
+  modelo          String?         @db.VarChar(50)
+  criadoEm        DateTime        @default(now())
+  atualizadoEm    DateTime        @updatedAt
+  categoria       Categoria       @relation(fields: [codigoCategoria], references: [codigo])
+  codigoCategoria Int
+  imagens         ImagemProduto[]
+  itensPedido     ItensPedido[]
+}
+
+model Categoria {
+  codigo             Int         @id @default(autoincrement())
+  nome               String      @unique @db.VarChar(50)
+  descricao          String?     @db.VarChar(200)
+  criadoEm           DateTime    @default(now())
+  atualizadoEm       DateTime    @updatedAt
+  categoriaPai       Categoria?  @relation("CategoriaPai", fields: [codigoCategoriaPai], references: [codigo])
+  codigoCategoriaPai Int?
+  subCategorias      Categoria[] @relation("CategoriaPai")
+  produtos           Produto[]
+}
+
+model ImagemProduto {
+  codigo        Int      @id @default(autoincrement())
+  imagem        String
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+  produto       Produto  @relation(fields: [codigoProduto], references: [codigo])
+  codigoProduto Int
+}
