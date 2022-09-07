@@ -11,16 +11,17 @@ datasource db {
 }
 
 model Pessoa {
-  codigo       Int        @id @default(autoincrement())
-  nome         String     @db.VarChar(50)
-  email        String     @unique @db.VarChar(50)
-  senha        String     @db.Text
-  telefone     String     @db.VarChar(14)
-  admin        Int        @default(0)
-  criadoEm     DateTime   @default(now())
-  atualizadoEm DateTime   @updatedAt
+  codigo       Int           @id @default(autoincrement())
+  nome         String        @db.VarChar(50)
+  email        String        @unique @db.VarChar(50)
+  senha        String        @db.Text
+  telefone     String        @db.VarChar(14)
+  admin        Int           @default(0)
+  criadoEm     DateTime      @default(now())
+  atualizadoEm DateTime      @updatedAt
   enderecos    Endereco[]
   pedidos      Pedido[]
+  itensPedido  ItensPedido[]
 }
 
 model Endereco {
@@ -45,7 +46,6 @@ model Pedido {
   metodoPagamento           Int
   data                      DateTime      @default(now())
   status                    Int           @default(0)
-  valorTotal                Float
   justificativaCancelamento String?       @db.VarChar(200)
   atualizadoEm              DateTime      @updatedAt
   pessoa                    Pessoa        @relation(fields: [pessoaCodigo], references: [codigo])
@@ -58,11 +58,12 @@ model Pedido {
 model ItensPedido {
   codigo        Int      @id @default(autoincrement())
   quantidade    Int
-  valor         Float
   criadoEm      DateTime @default(now())
   atualizadoEm  DateTime @updatedAt
   produto       Produto  @relation(fields: [codigoProduto], references: [codigo])
   codigoProduto Int
+  pessoa        Pessoa   @relation(fields: [codigoPessoa], references: [codigo])
+  codigoPessoa  Int
   pedido        Pedido?  @relation(fields: [codigoPedido], references: [codigo])
   codigoPedido  Int?
 }
