@@ -25,7 +25,8 @@
   "scripts": {
     "start": "nodemon",
     "build": "tsc",
-    "migrate:dev": "npx prisma migrate dev"
+    "migrate:dev": "npx prisma migrate dev",
+    "studio": "npx prisma studio"
   },
   "repository": {
     "type": "git",
