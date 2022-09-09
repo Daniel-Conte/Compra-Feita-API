@@ -36,8 +36,8 @@ model Endereco {
   complemento  String?  @db.VarChar(50)
   criadoEm     DateTime @default(now())
   atualizadoEm DateTime @updatedAt
-  pessoa       Pessoa   @relation(fields: [codigoPessoa], references: [codigo])
   codigoPessoa Int
+  pessoa       Pessoa   @relation(fields: [codigoPessoa], references: [codigo])
   pedidos      Pedido[]
 }
 
@@ -48,10 +48,10 @@ model Pedido {
   status                    Int           @default(0)
   justificativaCancelamento String?       @db.VarChar(200)
   atualizadoEm              DateTime      @updatedAt
-  pessoa                    Pessoa        @relation(fields: [pessoaCodigo], references: [codigo])
   pessoaCodigo              Int
-  endereco                  Endereco      @relation(fields: [enderecoCodigo], references: [codigo])
   enderecoCodigo            Int
+  pessoa                    Pessoa        @relation(fields: [pessoaCodigo], references: [codigo])
+  endereco                  Endereco      @relation(fields: [enderecoCodigo], references: [codigo])
   itensPedido               ItensPedido[]
 }
 
@@ -62,12 +62,12 @@ model ItensPedido {
   precoUnitario Float
   criadoEm      DateTime @default(now())
   atualizadoEm  DateTime @updatedAt
-  produto       Produto  @relation(fields: [codigoProduto], references: [codigo])
   codigoProduto Int
-  pessoa        Pessoa   @relation(fields: [codigoPessoa], references: [codigo])
   codigoPessoa  Int
-  pedido        Pedido?  @relation(fields: [codigoPedido], references: [codigo])
   codigoPedido  Int?
+  produto       Produto  @relation(fields: [codigoProduto], references: [codigo])
+  pessoa        Pessoa   @relation(fields: [codigoPessoa], references: [codigo])
+  pedido        Pedido?  @relation(fields: [codigoPedido], references: [codigo])
 }
 
 model Produto {
@@ -83,8 +83,8 @@ model Produto {
   modelo          String?         @db.VarChar(50)
   criadoEm        DateTime        @default(now())
   atualizadoEm    DateTime        @updatedAt
-  categoria       Categoria       @relation(fields: [codigoCategoria], references: [codigo])
   codigoCategoria Int
+  categoria       Categoria       @relation(fields: [codigoCategoria], references: [codigo])
   imagens         ImagemProduto[]
   itensPedido     ItensPedido[]
 }
@@ -95,8 +95,8 @@ model Categoria {
   descricao          String?     @db.VarChar(200)
   criadoEm           DateTime    @default(now())
   atualizadoEm       DateTime    @updatedAt
-  categoriaPai       Categoria?  @relation("CategoriaPai", fields: [codigoCategoriaPai], references: [codigo])
   codigoCategoriaPai Int?
+  categoriaPai       Categoria?  @relation("CategoriaPai", fields: [codigoCategoriaPai], references: [codigo])
   subCategorias      Categoria[] @relation("CategoriaPai")
   produtos           Produto[]
 }
@@ -106,6 +106,6 @@ model ImagemProduto {
   imagem        String
   criadoEm      DateTime @default(now())
   atualizadoEm  DateTime @updatedAt
-  produto       Produto  @relation(fields: [codigoProduto], references: [codigo])
   codigoProduto Int
+  produto       Produto  @relation(fields: [codigoProduto], references: [codigo])
 }
