@@ -58,6 +58,8 @@ model Pedido {
 model ItensPedido {
   codigo        Int      @id @default(autoincrement())
   quantidade    Int
+  nomeProduto   String   @db.VarChar(50)
+  precoUnitario Float
   criadoEm      DateTime @default(now())
   atualizadoEm  DateTime @updatedAt
   produto       Produto  @relation(fields: [codigoProduto], references: [codigo])
