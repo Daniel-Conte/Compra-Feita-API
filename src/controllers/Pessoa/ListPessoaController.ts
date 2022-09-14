@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 
+import IPessoaRepository from "../../repositories/PessoaRepository/IPessoaRepository";
 import sendError from "../../utils/sendError";
-import PessoaListUseCase from "./PessoaListUseCase";
 
-class PessoaListController {
-  constructor(private pessoaListUseCase: PessoaListUseCase) {}
+class ListPessoaController {
+  constructor(private pessoaRepository: IPessoaRepository) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const pessoaList = await this.pessoaListUseCase.exec();
+      const pessoaList = await this.exec();
 
       return res.status(200).json(pessoaList);
     } catch (error) {
@@ -21,6 +21,12 @@ class PessoaListController {
       });
     }
   }
+
+  async exec() {
+    const pessoaList = await this.pessoaRepository.getAll();
+
+    return pessoaList;
+  }
 }
 
-export default PessoaListController;
+export default ListPessoaController;

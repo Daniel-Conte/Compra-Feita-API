@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { pessoaCreateController } from "../useCases/PessoaCreate";
-import { pessoaListController } from "../useCases/PessoaList";
+
+import {
+  createPessoaController,
+  listPessoaController,
+} from "../controllers/Pessoa";
 
 const authRouter = Router();
 
 authRouter
-  .get("/usuarios", (req, res) => pessoaListController.handle(req, res))
-  .post("/usuarios", (req, res) => pessoaCreateController.handle(req, res));
+  .get("/usuarios", (req, res) => listPessoaController.handle(req, res))
+  .post("/usuarios", (req, res) => createPessoaController.handle(req, res));
 
 export default authRouter;
