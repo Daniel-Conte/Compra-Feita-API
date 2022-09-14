@@ -1,4 +1,4 @@
-import Pessoa from "../../models/Pessoa";
+import Pessoa from "@models/Pessoa";
 import IPessoaRepository from "./IPessoaRepository";
 
 class PessoaRepositoryPostgresSQL implements IPessoaRepository {

@@ -3,7 +3,7 @@ import { Router } from "express";
 import {
   createPessoaController,
   listPessoaController,
-} from "../controllers/Pessoa";
+} from "@controllers/Pessoa";
 
 const authRouter = Router();
 

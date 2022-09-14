@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
-import Pessoa from "../../models/Pessoa";
-import IPessoaRepository from "../../repositories/PessoaRepository/IPessoaRepository";
-import sendError from "../../utils/sendError";
+import Pessoa from "@models/Pessoa";
+import IPessoaRepository from "@repositories/PessoaRepository/IPessoaRepository";
+import sendError from "@utils/sendError";
 import type { ICreatePessoaDTO } from "./PessoaDTO";
 
 class CreatePessoaController {

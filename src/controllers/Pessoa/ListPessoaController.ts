@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import IPessoaRepository from "../../repositories/PessoaRepository/IPessoaRepository";
-import sendError from "../../utils/sendError";
+import IPessoaRepository from "@repositories/PessoaRepository/IPessoaRepository";
+import sendError from "@utils/sendError";
 
 class ListPessoaController {
   constructor(private pessoaRepository: IPessoaRepository) {}

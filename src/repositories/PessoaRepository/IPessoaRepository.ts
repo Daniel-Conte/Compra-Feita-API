@@ -1,4 +1,4 @@
-import Pessoa from "../../models/Pessoa";
+import Pessoa from "@models/Pessoa";
 
 interface IPessoaRepository {
   getAll(): Promise<Pessoa[]>;

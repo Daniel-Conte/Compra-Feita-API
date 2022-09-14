@@ -1,4 +1,4 @@
-import PessoaRepositoryPostgresSQL from "../../repositories/PessoaRepository/PessoaRepositoryPostgresSQL";
+import PessoaRepositoryPostgresSQL from "@repositories/PessoaRepository/PessoaRepositoryPostgresSQL";
 import CreatePessoaController from "./CreatePessoaController";
 import ListPessoaController from "./ListPessoaController";
 
