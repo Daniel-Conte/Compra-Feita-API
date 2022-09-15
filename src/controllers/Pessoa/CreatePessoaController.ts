@@ -1,26 +1,19 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 import Pessoa from "@models/Pessoa";
 import IPessoaRepository from "@repositories/PessoaRepository/IPessoaRepository";
-import sendError from "@utils/sendError";
 import type { ICreatePessoaDTO } from "./PessoaDTO";
 
 class CreatePessoaController {
   constructor(private pessoaRepository: IPessoaRepository) {}
 
-  async handle(req: Request, res: Response) {
+  async handle(req: Request, res: Response, next: NextFunction) {
     try {
       await this.exec(req.body);
 
       return res.status(201).send();
     } catch (error) {
-      const err: any = error;
-
-      return sendError({
-        message: err?.message || "Unexpected error",
-        status: 400,
-        res,
-      });
+      next(error);
     }
   }
 
