@@ -1,4 +1,4 @@
-import Pessoa from "@models/Pessoa";
+import { Pessoa } from "@modelTypes/pessoa";
 import IPessoaRepository from "./IPessoaRepository";
 
 class PessoaRepositoryInMemory implements IPessoaRepository {
