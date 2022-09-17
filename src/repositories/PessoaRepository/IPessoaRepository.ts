@@ -1,7 +1,12 @@
-import { CreatePessoaDTO, Pessoa, UpdatePessoaDTO } from "@modelTypes/pessoa";
+import {
+  CreatePessoaDTO,
+  Pessoa,
+  PessoaListItem,
+  UpdatePessoaDTO,
+} from "@modelTypes/pessoa";
 
 interface IPessoaRepository {
-  getAll(): Promise<Pessoa[]>;
+  getAll(): Promise<PessoaListItem[]>;
   getById(codigo: number): Promise<Pessoa | null>;
   getByEmail(email: string): Promise<Pessoa | null>;
   insert(pessoa: CreatePessoaDTO): Promise<void>;

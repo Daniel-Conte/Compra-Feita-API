@@ -1,10 +1,15 @@
-import { CreatePessoaDTO, Pessoa, UpdatePessoaDTO } from "@modelTypes/pessoa";
+import {
+  CreatePessoaDTO,
+  Pessoa,
+  PessoaListItem,
+  UpdatePessoaDTO,
+} from "@modelTypes/pessoa";
 import IPessoaRepository from "./IPessoaRepository";
 
 class PessoaRepositoryInMemory implements IPessoaRepository {
   private pessoas: Pessoa[] = [];
 
-  async getAll(): Promise<Pessoa[]> {
+  async getAll(): Promise<PessoaListItem[]> {
     return this.pessoas;
   }
 

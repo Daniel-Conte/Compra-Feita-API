@@ -1,44 +1,48 @@
-import { CreatePessoaDTO, Pessoa, UpdatePessoaDTO } from "@modelTypes/pessoa";
+import prismaClient from "@database/prismaClient";
+import {
+  CreatePessoaDTO,
+  Pessoa,
+  PessoaListItem,
+  UpdatePessoaDTO,
+} from "@modelTypes/pessoa";
 import IPessoaRepository from "./IPessoaRepository";
 
 class PessoaRepositoryPostgresSQL implements IPessoaRepository {
-  private pessoas: Pessoa[] = [];
-
-  async getAll(): Promise<Pessoa[]> {
-    return this.pessoas;
-  }
-
-  async getById(codigo: number): Promise<Pessoa | null> {
-    return this.pessoas.find((pessoa) => pessoa.codigo === codigo) || null;
-  }
-
-  async getByEmail(email: string): Promise<Pessoa | null> {
-    return this.pessoas.find((pessoa) => pessoa.email === email) || null;
-  }
-
-  async insert(pessoa: CreatePessoaDTO): Promise<void> {
-    const codigo = this.pessoas.length
-      ? this.pessoas[this.pessoas.length - 1].codigo + 1
-      : 1;
-
-    this.pessoas.push({
-      ...pessoa,
-      codigo,
-      criadoEm: new Date(),
-      atualizadoEm: new Date(),
+  async getAll(): Promise<PessoaListItem[]> {
+    return prismaClient.pessoa.findMany({
+      select: {
+        codigo: true,
+        nome: true,
+        email: true,
+        telefone: true,
+        admin: true,
+        criadoEm: true,
+        atualizadoEm: true,
+      },
     });
   }
 
-  async update(pessoa: UpdatePessoaDTO): Promise<void> {
-    const index = this.pessoas.findIndex((it) => it.codigo === pessoa.codigo);
-    const found = this.pessoas[index];
-    const newPessoa = { ...found, ...pessoa };
+  async getById(codigo: number): Promise<Pessoa | null> {
+    return prismaClient.pessoa.findFirst({ where: { codigo } });
+  }
 
-    this.pessoas.splice(index, 1, newPessoa);
+  async getByEmail(email: string): Promise<Pessoa | null> {
+    return prismaClient.pessoa.findFirst({ where: { email } });
+  }
+
+  async insert(pessoa: CreatePessoaDTO): Promise<void> {
+    await prismaClient.pessoa.create({ data: pessoa });
+  }
+
+  async update(pessoa: UpdatePessoaDTO): Promise<void> {
+    await prismaClient.pessoa.update({
+      data: pessoa,
+      where: { codigo: pessoa.codigo },
+    });
   }
 
   async delete(codigo: number): Promise<void> {
-    this.pessoas = this.pessoas.filter((pessoa) => pessoa.codigo !== codigo);
+    await prismaClient.pessoa.delete({ where: { codigo } });
   }
 }
 

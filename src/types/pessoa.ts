@@ -9,6 +9,8 @@ export type Pessoa = {
   atualizadoEm: Date;
 };
 
+export type PessoaListItem = Omit<Pessoa, "senha">;
+
 export type CreatePessoaDTO = Omit<
   Pessoa,
   "codigo" | "criadoEm" | "atualizadoEm"
