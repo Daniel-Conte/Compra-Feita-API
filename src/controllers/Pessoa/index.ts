@@ -6,7 +6,7 @@ import GetPessoaController from "./GetPessoaController";
 import ListPessoaController from "./ListPessoaController";
 import UpdatePessoaController from "./UpdatePessoaController";
 
-const pessoaRepositoryPostgresSQL = new PessoaRepositoryPostgresSQL();
+export const pessoaRepositoryPostgresSQL = new PessoaRepositoryPostgresSQL();
 const passwordProviderBCrypt = new PasswordProviderBCrypt();
 
 export const createPessoaController = new CreatePessoaController(

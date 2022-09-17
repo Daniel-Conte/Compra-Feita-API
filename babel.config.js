@@ -23,6 +23,7 @@ module.exports = {
           "@routes": "./src/routes",
           "@middlewares": "./src/middlewares",
           "@providers": "./src/providers",
+          "@config": "./src/config",
         },
       },
     ],

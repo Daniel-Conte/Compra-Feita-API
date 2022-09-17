@@ -13,7 +13,8 @@
       "@utils/*": ["./src/utils/*"],
       "@routes/*": ["./src/routes/*"],
       "@middlewares/*": ["./src/middlewares/*"],
-      "@providers/*": ["./src/providers/*"]
+      "@providers/*": ["./src/providers/*"],
+      "@config/*": ["./src/config/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
