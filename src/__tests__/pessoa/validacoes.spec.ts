@@ -70,6 +70,22 @@ describe("Pessoa Validações", () => {
     }
   });
 
+  it("Deve retornar erro de email inválido", async () => {
+    const pessoa: CreatePessoaDTO = {
+      nome: "Teste2",
+      email: "teste2",
+      senha: "123",
+      telefone: "99912345678",
+      admin: 0,
+    };
+
+    try {
+      await createPessoaController.exec(pessoa);
+    } catch (error) {
+      expect(error).toEqual(Error("E-mail inválido"));
+    }
+  });
+
   it("Deve retornar erro de senha obrigatória", async () => {
     const pessoa: CreatePessoaDTO = {
       nome: "Teste2",
@@ -134,7 +150,7 @@ describe("Pessoa Validações", () => {
     };
 
     try {
-      await createPessoaController.exec(pessoa);
+      await updatePessoaController.exec(pessoa);
 
       throw new Error("Falhou");
     } catch (error) {
@@ -153,11 +169,30 @@ describe("Pessoa Validações", () => {
     };
 
     try {
-      await createPessoaController.exec(pessoa);
+      await updatePessoaController.exec(pessoa);
 
       throw new Error("Falhou");
     } catch (error) {
       expect(error).toEqual(Error("E-mail é obrigatório"));
+    }
+  });
+
+  it("Deve retornar erro de email inválido", async () => {
+    const pessoa: UpdatePessoaDTO = {
+      codigo: 1,
+      nome: "Teste2",
+      email: "teste2",
+      senha: "123",
+      telefone: "99912345678",
+      admin: 0,
+    };
+
+    try {
+      await updatePessoaController.exec(pessoa);
+
+      throw new Error("Falhou");
+    } catch (error) {
+      expect(error).toEqual(Error("E-mail inválido"));
     }
   });
 
@@ -172,7 +207,7 @@ describe("Pessoa Validações", () => {
     };
 
     try {
-      await createPessoaController.exec(pessoa);
+      await updatePessoaController.exec(pessoa);
 
       throw new Error("Falhou");
     } catch (error) {
@@ -191,7 +226,7 @@ describe("Pessoa Validações", () => {
     };
 
     try {
-      await createPessoaController.exec(pessoa);
+      await updatePessoaController.exec(pessoa);
 
       throw new Error("Falhou");
     } catch (error) {

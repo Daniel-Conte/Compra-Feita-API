@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import IPessoaRepository from "@repositories/PessoaRepository/IPessoaRepository";
 import { UpdatePessoaDTO } from "@modelTypes/pessoa";
+import validateEmail from "@utils/validateEmail";
 
 class UpdatePessoaController {
   constructor(private pessoaRepository: IPessoaRepository) {}
@@ -20,6 +21,7 @@ class UpdatePessoaController {
     if (!data.codigo) throw new Error("Código é obrigatório");
     if (!data.nome) throw new Error("Nome é obrigatório");
     if (!data.email) throw new Error("E-mail é obrigatório");
+    if (!validateEmail(data.email)) throw new Error("E-mail inválido");
     if (!data.senha) throw new Error("Senha é obrigatória");
     if (!data.telefone) throw new Error("Telefone é obrigatório");
 
