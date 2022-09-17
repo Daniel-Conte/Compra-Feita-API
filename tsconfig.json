@@ -12,7 +12,8 @@
       "@repositories/*": ["./src/repositories/*"],
       "@utils/*": ["./src/utils/*"],
       "@routes/*": ["./src/routes/*"],
-      "@middlewares/*": ["./src/middlewares/*"]
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@providers/*": ["./src/providers/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
