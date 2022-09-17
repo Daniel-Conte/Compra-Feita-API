@@ -7,7 +7,7 @@ import LoginController from "./LoginController";
 const passwordProviderBCrypt = new PasswordProviderBCrypt();
 const authTokenProviderJWT = new AuthTokenProviderJWT(
   authSecret,
-  Date.now() * 1000 * 10
+  Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 1 // 1 dia
 );
 
 export const loginController = new LoginController(
