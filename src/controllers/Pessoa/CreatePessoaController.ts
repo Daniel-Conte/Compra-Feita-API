@@ -1,10 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 
 import IPessoaRepository from "@repositories/PessoaRepository/IPessoaRepository";
+import IPasswordProvider from "@providers/password/IPasswordProvider";
 import { CreatePessoaDTO } from "@modelTypes/pessoa";
 
 class CreatePessoaController {
-  constructor(private pessoaRepository: IPessoaRepository) {}
+  constructor(
+    private pessoaRepository: IPessoaRepository,
+    private passwordProvider: IPasswordProvider
+  ) {}
 
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
@@ -25,7 +29,10 @@ class CreatePessoaController {
     if (!data.senha) throw new Error("Senha é obrigatória");
     if (!data.telefone) throw new Error("Telefone é obrigatório");
 
-    this.pessoaRepository.insert(data);
+    const user = { ...data };
+    user.senha = this.passwordProvider.encryptPassword(user.senha);
+
+    this.pessoaRepository.insert(user);
 
     return "Usuário cadastrado com sucesso";
   }

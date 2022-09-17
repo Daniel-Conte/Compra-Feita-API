@@ -1,4 +1,5 @@
 import PessoaRepositoryInMemory from "@repositories/PessoaRepository/PessoaRepositoryInMemory";
+import PasswordProviderBCrypt from "@providers/password/PasswordProviderBCrypt";
 import CreatePessoaController from "@controllers/Pessoa/CreatePessoaController";
 import ListPessoaController from "@controllers/Pessoa/ListPessoaController";
 import { CreatePessoaDTO, UpdatePessoaDTO } from "@modelTypes/pessoa";
@@ -7,7 +8,12 @@ import GetPessoaController from "@controllers/Pessoa/GetPessoaController";
 import DeletePessoaController from "@controllers/Pessoa/DeletePessoaController";
 
 const pessoaRepoInMemory = new PessoaRepositoryInMemory();
-const createPessoaController = new CreatePessoaController(pessoaRepoInMemory);
+const passwordProviderBCrypt = new PasswordProviderBCrypt();
+
+const createPessoaController = new CreatePessoaController(
+  pessoaRepoInMemory,
+  passwordProviderBCrypt
+);
 const listPessoaController = new ListPessoaController(pessoaRepoInMemory);
 const updatePessoaController = new UpdatePessoaController(pessoaRepoInMemory);
 const getPessoaController = new GetPessoaController(pessoaRepoInMemory);
@@ -42,13 +48,21 @@ describe("Pessoa Fluxo", () => {
         codigo: 1,
         nome: "Teste1",
         email: "teste1@teste.com",
-        senha: "123",
+        senha: expect.any(String),
         telefone: "99912345678",
         admin: 0,
         criadoEm: expect.any(Date),
         atualizadoEm: expect.any(Date),
       })
     );
+  });
+
+  it("Deve verificar se a senha está hasheada", async () => {
+    const res = await getPessoaController.exec(1);
+
+    expect(res.senha).toBeTruthy();
+    expect(res.senha === "123").toBeFalsy();
+    expect(res.senha.length).toBeGreaterThan(10);
   });
 
   it("Deve retornar listagem com 1 pessoa", async () => {
@@ -60,7 +74,7 @@ describe("Pessoa Fluxo", () => {
           codigo: 1,
           nome: "Teste1",
           email: "teste1@teste.com",
-          senha: "123",
+          senha: expect.any(String),
           telefone: "99912345678",
           admin: 0,
         }),

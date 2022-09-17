@@ -1,12 +1,18 @@
-import { CreatePessoaDTO, UpdatePessoaDTO } from "@modelTypes/pessoa";
 import PessoaRepositoryInMemory from "@repositories/PessoaRepository/PessoaRepositoryInMemory";
+import PasswordProviderBCrypt from "@providers/password/PasswordProviderBCrypt";
+import { CreatePessoaDTO, UpdatePessoaDTO } from "@modelTypes/pessoa";
 import CreatePessoaController from "@controllers/Pessoa/CreatePessoaController";
 import UpdatePessoaController from "@controllers/Pessoa/UpdatePessoaController";
 import GetPessoaController from "@controllers/Pessoa/GetPessoaController";
 import DeletePessoaController from "@controllers/Pessoa/DeletePessoaController";
 
 const pessoaRepoInMemory = new PessoaRepositoryInMemory();
-const createPessoaController = new CreatePessoaController(pessoaRepoInMemory);
+const passwordProviderBCrypt = new PasswordProviderBCrypt();
+
+const createPessoaController = new CreatePessoaController(
+  pessoaRepoInMemory,
+  passwordProviderBCrypt
+);
 const updatePessoaController = new UpdatePessoaController(pessoaRepoInMemory);
 const getPessoaController = new GetPessoaController(pessoaRepoInMemory);
 const deletePessoaController = new DeletePessoaController(pessoaRepoInMemory);

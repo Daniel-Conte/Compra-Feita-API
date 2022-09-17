@@ -1,4 +1,5 @@
 import PessoaRepositoryPostgresSQL from "@repositories/PessoaRepository/PessoaRepositoryPostgresSQL";
+import PasswordProviderBCrypt from "@providers/password/PasswordProviderBCrypt";
 import CreatePessoaController from "./CreatePessoaController";
 import DeletePessoaController from "./DeletePessoaController";
 import GetPessoaController from "./GetPessoaController";
@@ -6,9 +7,11 @@ import ListPessoaController from "./ListPessoaController";
 import UpdatePessoaController from "./UpdatePessoaController";
 
 const pessoaRepositoryPostgresSQL = new PessoaRepositoryPostgresSQL();
+const passwordProviderBCrypt = new PasswordProviderBCrypt();
 
 export const createPessoaController = new CreatePessoaController(
-  pessoaRepositoryPostgresSQL
+  pessoaRepositoryPostgresSQL,
+  passwordProviderBCrypt
 );
 export const listPessoaController = new ListPessoaController(
   pessoaRepositoryPostgresSQL
