@@ -1,4 +1,4 @@
-import { Pessoa } from "@modelTypes/pessoa";
+import { CreatePessoaDTO, Pessoa, UpdatePessoaDTO } from "@modelTypes/pessoa";
 import IPessoaRepository from "./IPessoaRepository";
 
 class PessoaRepositoryPostgresSQL implements IPessoaRepository {
@@ -16,8 +16,25 @@ class PessoaRepositoryPostgresSQL implements IPessoaRepository {
     return this.pessoas.find((pessoa) => pessoa.email === email) || null;
   }
 
-  async save(pessoa: Pessoa): Promise<void> {
-    this.pessoas.push(pessoa);
+  async insert(pessoa: CreatePessoaDTO): Promise<void> {
+    const codigo = this.pessoas.length
+      ? this.pessoas[this.pessoas.length - 1].codigo + 1
+      : 1;
+
+    this.pessoas.push({
+      ...pessoa,
+      codigo,
+      criadoEm: new Date(),
+      atualizadoEm: new Date(),
+    });
+  }
+
+  async update(pessoa: UpdatePessoaDTO): Promise<void> {
+    const index = this.pessoas.findIndex((it) => it.codigo === pessoa.codigo);
+    const found = this.pessoas[index];
+    const newPessoa = { ...found, ...pessoa };
+
+    this.pessoas.splice(index, 1, newPessoa);
   }
 
   async delete(codigo: number): Promise<void> {

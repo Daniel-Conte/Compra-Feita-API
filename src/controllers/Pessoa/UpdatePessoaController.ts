@@ -1,34 +1,36 @@
 import { NextFunction, Request, Response } from "express";
 
 import IPessoaRepository from "@repositories/PessoaRepository/IPessoaRepository";
-import { CreatePessoaDTO } from "@modelTypes/pessoa";
+import { UpdatePessoaDTO } from "@modelTypes/pessoa";
 
-class CreatePessoaController {
+class UpdatePessoaController {
   constructor(private pessoaRepository: IPessoaRepository) {}
 
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
-      const created = await this.exec(req.body);
+      const updated = await this.exec(req.body);
 
-      return res.status(201).json({ message: created });
+      return res.status(200).json({ message: updated });
     } catch (error) {
       next(error);
     }
   }
 
-  async exec(data: CreatePessoaDTO) {
-    const alreadyExists = await this.pessoaRepository.getByEmail(data.email);
-
-    if (alreadyExists) throw new Error("Este e-mail já foi usado");
+  async exec(data: UpdatePessoaDTO) {
+    if (!data.codigo) throw new Error("Código é obrigatório");
     if (!data.nome) throw new Error("Nome é obrigatório");
     if (!data.email) throw new Error("E-mail é obrigatório");
     if (!data.senha) throw new Error("Senha é obrigatória");
     if (!data.telefone) throw new Error("Telefone é obrigatório");
 
-    this.pessoaRepository.insert(data);
+    const found = await this.pessoaRepository.getById(data.codigo);
 
-    return "Usuário cadastrado com sucesso";
+    if (!found) throw new Error("Usuário não encontrado");
+
+    this.pessoaRepository.update(data);
+
+    return "Usuário alterado com sucesso";
   }
 }
 
-export default CreatePessoaController;
+export default UpdatePessoaController;

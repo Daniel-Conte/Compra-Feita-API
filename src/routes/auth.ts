@@ -1,16 +1,11 @@
 import { Router } from "express";
 
-import {
-  createPessoaController,
-  listPessoaController,
-} from "@controllers/Pessoa";
+import { createPessoaController } from "@controllers/Pessoa";
 
 const authRouter = Router();
 
-authRouter
-  .get("/usuarios", (req, res) => listPessoaController.handle(req, res))
-  .post("/usuarios", (req, res, next) =>
-    createPessoaController.handle(req, res, next)
-  );
+authRouter.post("/registrar-se", (req, res, next) =>
+  createPessoaController.handle(req, res, next)
+);
 
 export default authRouter;
