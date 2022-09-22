@@ -20,6 +20,18 @@ class EnderecoRepositoryInMemory implements IEnderecoRepository {
     );
   }
 
+  async getByName(
+    name: string,
+    codigoPessoa: number
+  ): Promise<Endereco | null> {
+    return (
+      this.enderecos.find(
+        (endereco) =>
+          endereco.codigoPessoa === codigoPessoa && endereco.nome === name
+      ) || null
+    );
+  }
+
   async insert(endereco: CreateEnderecoDTO): Promise<void> {
     const codigo = this.enderecos.length
       ? this.enderecos[this.enderecos.length - 1].codigo + 1

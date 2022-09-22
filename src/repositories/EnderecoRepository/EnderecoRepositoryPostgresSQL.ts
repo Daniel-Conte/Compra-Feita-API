@@ -15,6 +15,15 @@ class EnderecoRepositoryPostgresSQL implements IEnderecoRepository {
     return prismaClient.endereco.findFirst({ where: { codigo } });
   }
 
+  async getByName(
+    name: string,
+    codigoPessoa: number
+  ): Promise<Endereco | null> {
+    return prismaClient.endereco.findFirst({
+      where: { codigoPessoa, AND: { nome: name } },
+    });
+  }
+
   async insert(endereco: CreateEnderecoDTO): Promise<void> {
     await prismaClient.endereco.create({ data: endereco });
   }
