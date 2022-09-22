@@ -29,7 +29,7 @@ class UpdatePessoaController {
 
     if (!found) throw new Error("Usuário não encontrado");
 
-    this.pessoaRepository.update(data);
+    await this.pessoaRepository.update(data);
 
     return "Usuário alterado com sucesso";
   }

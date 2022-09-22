@@ -35,7 +35,7 @@ class CreatePessoaController {
     const user = { ...data };
     user.senha = this.passwordProvider.encryptPassword(user.senha);
 
-    this.pessoaRepository.insert(user);
+    await this.pessoaRepository.insert(user);
 
     return "Usuário cadastrado com sucesso";
   }
