@@ -57,7 +57,7 @@ class EnderecoRepositoryInMemory implements IEnderecoRepository {
 
   async delete(codigo: number): Promise<void> {
     this.enderecos = this.enderecos.filter(
-      (pessoa) => pessoa.codigo !== codigo
+      (endereco) => endereco.codigo !== codigo
     );
   }
 }
