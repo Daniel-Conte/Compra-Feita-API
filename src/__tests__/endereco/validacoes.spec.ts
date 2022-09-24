@@ -258,7 +258,6 @@ describe("Endereço Validações", () => {
       numero: "1234",
       rua: "Rua1",
       uf: "UF",
-      codigoPessoa: 1,
     };
 
     try {
@@ -281,7 +280,6 @@ describe("Endereço Validações", () => {
       numero: "1234",
       rua: "Rua1",
       uf: "UF",
-      codigoPessoa: 1,
     };
 
     try {
@@ -304,7 +302,6 @@ describe("Endereço Validações", () => {
       numero: "1234",
       rua: "Rua1",
       uf: "UF",
-      codigoPessoa: 1,
     };
 
     try {
@@ -327,7 +324,6 @@ describe("Endereço Validações", () => {
       numero: "1234",
       rua: "Rua1",
       uf: "UF",
-      codigoPessoa: 1,
     };
 
     try {
@@ -350,7 +346,6 @@ describe("Endereço Validações", () => {
       numero: "1234",
       rua: "Rua1",
       uf: "UF",
-      codigoPessoa: 1,
     };
 
     try {
@@ -373,7 +368,6 @@ describe("Endereço Validações", () => {
       numero: "1234",
       rua: "Rua1",
       uf: "UF",
-      codigoPessoa: 1,
     };
 
     try {
@@ -382,29 +376,6 @@ describe("Endereço Validações", () => {
       throw new Error("Falhou");
     } catch (error) {
       expect(error).toEqual(Error("Cidade é obrigatória"));
-    }
-  });
-
-  it("Deve retornar erro de usuário obrigatório", async () => {
-    const endereco: UpdateEnderecoDTO = {
-      codigo: 1,
-      nome: "endereco1",
-      bairro: "Bairro1",
-      cep: "9999999",
-      cidade: "Cidade1",
-      complemento: "Complemento1",
-      numero: "1234",
-      rua: "Rua1",
-      uf: "UF",
-      codigoPessoa: 0,
-    };
-
-    try {
-      await updateEnderecoController.exec(endereco);
-
-      throw new Error("Falhou");
-    } catch (error) {
-      expect(error).toEqual(Error("Usuário é obrigatório"));
     }
   });
 
@@ -419,7 +390,6 @@ describe("Endereço Validações", () => {
       numero: "",
       rua: "Rua1",
       uf: "UF",
-      codigoPessoa: 1,
     };
 
     try {
@@ -442,7 +412,6 @@ describe("Endereço Validações", () => {
       numero: "1234",
       rua: "",
       uf: "UF",
-      codigoPessoa: 1,
     };
 
     try {
@@ -465,7 +434,6 @@ describe("Endereço Validações", () => {
       numero: "1234",
       rua: "Rua1",
       uf: "",
-      codigoPessoa: 1,
     };
 
     try {

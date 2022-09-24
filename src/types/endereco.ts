@@ -18,4 +18,7 @@ export type CreateEnderecoDTO = Omit<
   "codigo" | "criadoEm" | "atualizadoEm"
 >;
 
-export type UpdateEnderecoDTO = Omit<Endereco, "criadoEm" | "atualizadoEm">;
+export type UpdateEnderecoDTO = Omit<
+  Endereco,
+  "criadoEm" | "atualizadoEm" | "codigoPessoa"
+>;

@@ -2,13 +2,18 @@ import { NextFunction, Request, Response } from "express";
 
 import IEnderecoRepository from "@repositories/EnderecoRepository/IEnderecoRepository";
 import { CreateEnderecoDTO } from "@modelTypes/endereco";
+import { AuthTokenDecoded } from "@modelTypes/auth";
 
 class CreateEnderecoController {
   constructor(private enderecoRepository: IEnderecoRepository) {}
 
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
-      const created = await this.exec(req.body);
+      const user = req.user as AuthTokenDecoded;
+      const created = await this.exec({
+        ...req.body,
+        codigoPessoa: user.codigo,
+      });
 
       return res.status(201).json({ message: created });
     } catch (error) {

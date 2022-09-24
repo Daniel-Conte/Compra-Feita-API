@@ -22,7 +22,6 @@ class UpdateEnderecoController {
     if (!data.bairro) throw new Error("Bairro é obrigatório");
     if (!data.cep) throw new Error("CEP é obrigatório");
     if (!data.cidade) throw new Error("Cidade é obrigatória");
-    if (!data.codigoPessoa) throw new Error("Usuário é obrigatório");
     if (!data.numero) throw new Error("Número é obrigatório");
     if (!data.rua) throw new Error("Rua é obrigatória");
     if (!data.uf) throw new Error("UF é obrigatória");

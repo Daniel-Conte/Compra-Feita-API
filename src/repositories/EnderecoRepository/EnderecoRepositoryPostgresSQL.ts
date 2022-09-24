@@ -25,13 +25,22 @@ class EnderecoRepositoryPostgresSQL implements IEnderecoRepository {
   }
 
   async insert(endereco: CreateEnderecoDTO): Promise<void> {
-    await prismaClient.endereco.create({ data: endereco });
+    const { codigoPessoa, ...newEndereco } = endereco;
+
+    await prismaClient.endereco.create({
+      data: {
+        ...newEndereco,
+        pessoa: { connect: { codigo: codigoPessoa } },
+      },
+    });
   }
 
   async update(endereco: UpdateEnderecoDTO): Promise<void> {
+    const { codigo, ...newEndereco } = endereco;
+
     await prismaClient.endereco.update({
-      data: endereco,
-      where: { codigo: endereco.codigo },
+      data: { ...newEndereco },
+      where: { codigo },
     });
   }
 

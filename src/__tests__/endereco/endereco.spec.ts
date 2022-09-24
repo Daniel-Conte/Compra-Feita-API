@@ -281,7 +281,6 @@ describe("Endereco Fluxo", () => {
       numero: "1234Alt",
       rua: "Rua2Alt",
       uf: "FU",
-      codigoPessoa: 2,
     };
 
     const res = await updateEnderecoController.exec(endereco);
