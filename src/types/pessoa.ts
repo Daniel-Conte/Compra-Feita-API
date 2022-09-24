@@ -16,4 +16,7 @@ export type CreatePessoaDTO = Omit<
   "codigo" | "criadoEm" | "atualizadoEm"
 >;
 
-export type UpdatePessoaDTO = Omit<Pessoa, "criadoEm" | "atualizadoEm">;
+export type UpdatePessoaDTO = Omit<
+  Pessoa,
+  "criadoEm" | "atualizadoEm" | "senha"
+>;

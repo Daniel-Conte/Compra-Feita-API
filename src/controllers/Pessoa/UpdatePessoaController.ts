@@ -22,7 +22,6 @@ class UpdatePessoaController {
     if (!data.nome) throw new Error("Nome é obrigatório");
     if (!data.email) throw new Error("E-mail é obrigatório");
     if (!validateEmail(data.email)) throw new Error("E-mail inválido");
-    if (!data.senha) throw new Error("Senha é obrigatória");
     if (!data.telefone) throw new Error("Telefone é obrigatório");
 
     const found = await this.pessoaRepository.getById(data.codigo);

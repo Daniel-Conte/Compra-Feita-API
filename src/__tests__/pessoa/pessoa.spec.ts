@@ -118,7 +118,6 @@ describe("Pessoa Fluxo", () => {
       codigo: 1,
       nome: "Teste1Alt",
       email: "teste1Alt@teste.com",
-      senha: "123456",
       telefone: "999777777777",
       admin: 1,
     };
@@ -136,7 +135,7 @@ describe("Pessoa Fluxo", () => {
         codigo: 1,
         nome: "Teste1Alt",
         email: "teste1Alt@teste.com",
-        senha: "123456",
+        senha: expect.any(String),
         telefone: "999777777777",
         admin: 1,
         criadoEm: expect.any(Date),

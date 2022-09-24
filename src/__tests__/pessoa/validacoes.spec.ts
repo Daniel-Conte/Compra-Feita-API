@@ -125,7 +125,6 @@ describe("Pessoa Validações", () => {
       codigo: 3,
       nome: "Teste1",
       email: "teste1@teste.com",
-      senha: "123",
       telefone: "99912345678",
       admin: 0,
     };
@@ -144,7 +143,6 @@ describe("Pessoa Validações", () => {
       codigo: 1,
       nome: "",
       email: "teste2@teste.com",
-      senha: "123",
       telefone: "99912345678",
       admin: 0,
     };
@@ -163,7 +161,6 @@ describe("Pessoa Validações", () => {
       codigo: 1,
       nome: "Teste2",
       email: "",
-      senha: "123",
       telefone: "99912345678",
       admin: 0,
     };
@@ -182,7 +179,6 @@ describe("Pessoa Validações", () => {
       codigo: 1,
       nome: "Teste2",
       email: "teste2",
-      senha: "123",
       telefone: "99912345678",
       admin: 0,
     };
@@ -196,31 +192,11 @@ describe("Pessoa Validações", () => {
     }
   });
 
-  it("Deve retornar erro de senha obrigatória", async () => {
-    const pessoa: UpdatePessoaDTO = {
-      codigo: 1,
-      nome: "Teste2",
-      email: "teste2@teste.com",
-      senha: "",
-      telefone: "99912345678",
-      admin: 0,
-    };
-
-    try {
-      await updatePessoaController.exec(pessoa);
-
-      throw new Error("Falhou");
-    } catch (error) {
-      expect(error).toEqual(Error("Senha é obrigatória"));
-    }
-  });
-
   it("Deve retornar erro de telefone obrigatório", async () => {
     const pessoa: UpdatePessoaDTO = {
       codigo: 1,
       nome: "Teste2",
       email: "teste2@teste.com",
-      senha: "123",
       telefone: "",
       admin: 0,
     };
