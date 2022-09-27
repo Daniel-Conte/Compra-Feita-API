@@ -4,7 +4,7 @@ import {
   Produto,
   UpdateProdutoDTO,
 } from "@modelTypes/produto";
-import IProdutoRepository from "./IProdutoaRepository";
+import IProdutoRepository from "./IProdutoRepository";
 
 class ProdutoRepositoryPostgresSQL implements IProdutoRepository {
   async getAll(): Promise<Produto[]> {
@@ -22,13 +22,22 @@ class ProdutoRepositoryPostgresSQL implements IProdutoRepository {
   }
 
   async insert(produto: CreateProdutoDTO): Promise<void> {
-    await prismaClient.produto.create({ data: produto });
+    const { codigoCategoria, ...newProduto } = produto;
+
+    await prismaClient.produto.create({
+      data: {
+        ...newProduto,
+        categoria: { connect: { codigo: codigoCategoria } },
+      },
+    });
   }
 
   async update(produto: UpdateProdutoDTO): Promise<void> {
+    const { codigo, ...newProduto } = produto;
+
     await prismaClient.produto.update({
-      data: produto,
-      where: { codigo: produto.codigo },
+      data: { ...newProduto },
+      where: { codigo },
     });
   }
 

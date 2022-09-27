@@ -4,7 +4,7 @@ import {
   UpdateProdutoDTO,
 } from "@modelTypes/produto";
 
-interface ProdutoaRepository {
+interface ProdutoRepository {
   getAll(): Promise<Produto[]>;
   getById(codigo: number): Promise<Produto | null>;
   getByName(name: string): Promise<Produto | null>;
@@ -13,4 +13,4 @@ interface ProdutoaRepository {
   delete(codigo: number): Promise<void>;
 }
 
-export default ProdutoaRepository;
+export default ProdutoRepository;

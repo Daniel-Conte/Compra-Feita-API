@@ -3,7 +3,7 @@ import {
   Produto,
   UpdateProdutoDTO,
 } from "@modelTypes/produto";
-import IProdutoRepository from "./IProdutoaRepository";
+import IProdutoRepository from "./IProdutoRepository";
 
 class ProdutoRepositoryInMemory implements IProdutoRepository {
   private produtos: Produto[] = [];
