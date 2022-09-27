@@ -47,10 +47,11 @@
   "scripts": {
     "dev": "nodemon -r tsconfig-paths/register src/server.ts",
     "start": "node dist/server.js",
-    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "build": "yarn type-check && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "migrate:dev": "npx prisma migrate dev",
     "studio": "npx prisma studio",
-    "test": "jest"
+    "test": "jest",
+    "type-check": "tsc"
   },
   "repository": {
     "type": "git",
