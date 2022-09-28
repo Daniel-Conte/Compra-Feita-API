@@ -22,7 +22,8 @@ class CreateProdutoController {
     if (!data.nome) throw new Error("Nome é obrigatório");
     if (!data.codigoCategoria) throw new Error("Categoria é obrigatória");
     if (!data.descricao) throw new Error("Descrição é obrigatória");
-    if (!data.estoque) throw new Error("Estoque é obrigatório");
+    if (data.estoque === null || data.estoque === undefined)
+      throw new Error("Estoque é obrigatório");
     if (!data.precoUnitario) throw new Error("Preço é obrigatório");
 
     const alreadyExists = await this.produtoRepository.getByName(data.nome);
