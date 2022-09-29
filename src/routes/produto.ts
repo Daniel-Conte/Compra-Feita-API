@@ -8,20 +8,17 @@ import {
   updateProdutoController,
 } from "@controllers/Produto";
 import jwtAuthenticator from "@middlewares/jwtAuthenticator";
+import adminValidator from "@middlewares/adminValidator";
 
 const produtoRouter = Router();
 
 produtoRouter
-  .get("/", (req, res, next) => listProdutoController.handle(req, res, next))
-  .post("/", jwtAuthenticator, (req, res, next) =>
-    createProdutoController.handle(req, res, next)
-  )
-  .put("/", jwtAuthenticator, (req, res, next) =>
-    updateProdutoController.handle(req, res, next)
-  )
-  .get("/:id", (req, res, next) => getProdutoController.handle(req, res, next))
-  .delete("/:id", jwtAuthenticator, (req, res, next) =>
-    deleteProdutoController.handle(req, res, next)
-  );
+  .get("/", (...args) => listProdutoController.handle(...args))
+  .get("/:id", (...args) => getProdutoController.handle(...args))
+  .use(jwtAuthenticator)
+  .use(adminValidator)
+  .post("/", (...args) => createProdutoController.handle(...args))
+  .put("/", (...args) => updateProdutoController.handle(...args))
+  .delete("/:id", (...args) => deleteProdutoController.handle(...args));
 
 export default produtoRouter;

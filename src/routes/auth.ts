@@ -5,12 +5,8 @@ import { loginController } from "@controllers/Auth";
 
 const authRouter = Router();
 
-authRouter.post("/registrar-se", (req, res, next) =>
-  createPessoaController.handle(req, res, next)
-);
-
-authRouter.post("/login", (req, res, next) =>
-  loginController.handle(req, res, next)
-);
+authRouter
+  .post("/registrar-se", (...args) => createPessoaController.handle(...args))
+  .post("/login", (...args) => loginController.handle(...args));
 
 export default authRouter;
