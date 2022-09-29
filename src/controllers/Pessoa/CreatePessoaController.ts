@@ -13,7 +13,11 @@ class CreatePessoaController {
 
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
-      const created = await this.exec(req.body);
+      const pessoa: CreatePessoaDTO = { ...req.body };
+
+      pessoa.admin = 0;
+
+      const created = await this.exec(pessoa);
 
       return res.status(201).json({ message: created });
     } catch (error) {
