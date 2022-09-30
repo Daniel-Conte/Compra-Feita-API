@@ -1,5 +1,5 @@
 import prismaClient from "@database/prismaClient";
-import { CreatePedidoDTO, Pedido, UpdatePedidoDTO } from "@modelTypes/pedido";
+import { CreatePedidoDTO, Pedido } from "@modelTypes/pedido";
 import IPedidoRepository from "./IPedidoRepository";
 
 class PedidoRepositoryPostgresSQL implements IPedidoRepository {
@@ -7,33 +7,62 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
     return prismaClient.pedido.findMany();
   }
 
+  async getByUser(pessoaCodigo: number): Promise<Pedido[]> {
+    return prismaClient.pedido.findMany({ where: { pessoaCodigo } });
+  }
+
   async getById(codigo: number): Promise<Pedido | null> {
-    return prismaClient.pedido.findFirst({ where: { codigo } });
+    return prismaClient.pedido.findUnique({ where: { codigo } });
   }
 
   async insert(pedido: CreatePedidoDTO): Promise<void> {
-    const { pessoaCodigo, enderecoCodigo, ...newPedido } = pedido;
+    const { pessoaCodigo, enderecoCodigo, metodoPagamento, itens } = pedido;
 
     await prismaClient.pedido.create({
       data: {
-        ...newPedido,
+        metodoPagamento,
         endereco: { connect: { codigo: enderecoCodigo } },
         pessoa: { connect: { codigo: pessoaCodigo } },
+        itensPedido: {
+          connect: itens.map((codigo) => ({ codigo: codigo })),
+        },
       },
     });
   }
 
-  async update(pedido: UpdatePedidoDTO): Promise<void> {
-    const { codigo, enderecoCodigo, pessoaCodigo, ...newPedido } = pedido;
-
+  async confirmar(codigo: number): Promise<void> {
     await prismaClient.pedido.update({
-      data: { ...newPedido, endereco: { connect: { codigo: enderecoCodigo } } },
+      data: { status: 1 },
       where: { codigo },
     });
   }
 
-  async delete(codigo: number): Promise<void> {
-    await prismaClient.pedido.delete({ where: { codigo } });
+  async negar(codigo: number, justificativa: string): Promise<void> {
+    await prismaClient.pedido.update({
+      data: { status: 2, justificativaCancelamento: justificativa },
+      where: { codigo },
+    });
+  }
+
+  async cancelar(codigo: number, justificativa: string): Promise<void> {
+    await prismaClient.pedido.update({
+      data: { status: 3, justificativaCancelamento: justificativa },
+      where: { codigo },
+    });
+  }
+
+  async iniciar(codigo: number): Promise<void> {
+    await prismaClient.pedido.update({
+      data: { status: 4 },
+      where: { codigo },
+    });
+  }
+
+  async finalizar(codigo: number): Promise<void> {
+    await prismaClient.pedido.update({
+      data: { status: 5 },
+      where: { codigo },
+    });
   }
 }
 
