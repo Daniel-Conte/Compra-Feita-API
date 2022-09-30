@@ -5,6 +5,7 @@ import usuariosRouter from "./usuarios";
 import enderecoRouter from "./endereco";
 import produtoRouter from "./produto";
 import categoriaRouter from "./categoria";
+import carrinhoComprasRouter from "./carrinhoCompras";
 
 const routes = Router();
 
@@ -13,5 +14,6 @@ routes.use("/usuarios", usuariosRouter);
 routes.use("/endereco", enderecoRouter);
 routes.use("/produto", produtoRouter);
 routes.use("/categoria", categoriaRouter);
+routes.use("/carrinho-compras", carrinhoComprasRouter);
 
 export default routes;
