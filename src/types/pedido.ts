@@ -1,3 +1,5 @@
+import { ItemPedido } from "./itemPedido";
+
 export type Pedido = {
   codigo: number;
   metodoPagamento: number; // 1 -> Cartão; 2 -> Dinheiro
@@ -7,6 +9,10 @@ export type Pedido = {
   atualizadoEm: Date;
   pessoaCodigo: number;
   enderecoCodigo: number;
+};
+
+export type PedidoFull = Pedido & {
+  itensPedido: ItemPedido[];
 };
 
 export type CreatePedidoDTO = Pick<

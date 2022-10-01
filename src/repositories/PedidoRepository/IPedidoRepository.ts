@@ -1,9 +1,9 @@
-import { CreatePedidoDTO, Pedido } from "@modelTypes/pedido";
+import { CreatePedidoDTO, Pedido, PedidoFull } from "@modelTypes/pedido";
 
 interface PedidoRepository {
   getAll(): Promise<Pedido[]>;
   getByUser(pessoaCodigo: number): Promise<Pedido[]>;
-  getById(codigo: number): Promise<Pedido | null>;
+  getById(codigo: number): Promise<PedidoFull | null>;
   insert(pedido: CreatePedidoDTO): Promise<void>;
   confirmar(codigo: number): Promise<void>;
   iniciar(codigo: number): Promise<void>;

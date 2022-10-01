@@ -1,5 +1,5 @@
 import prismaClient from "@database/prismaClient";
-import { CreatePedidoDTO, Pedido } from "@modelTypes/pedido";
+import { CreatePedidoDTO, Pedido, PedidoFull } from "@modelTypes/pedido";
 import IPedidoRepository from "./IPedidoRepository";
 
 class PedidoRepositoryPostgresSQL implements IPedidoRepository {
@@ -11,8 +11,21 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
     return prismaClient.pedido.findMany({ where: { pessoaCodigo } });
   }
 
-  async getById(codigo: number): Promise<Pedido | null> {
-    return prismaClient.pedido.findUnique({ where: { codigo } });
+  async getById(codigo: number): Promise<PedidoFull | null> {
+    return prismaClient.pedido.findUnique({
+      select: {
+        codigo: true,
+        data: true,
+        atualizadoEm: true,
+        enderecoCodigo: true,
+        itensPedido: true,
+        justificativaCancelamento: true,
+        metodoPagamento: true,
+        pessoaCodigo: true,
+        status: true,
+      },
+      where: { codigo },
+    });
   }
 
   async insert(pedido: CreatePedidoDTO): Promise<void> {
