@@ -12,7 +12,7 @@ class CreatePedidoController {
       const user = req.user as AuthTokenDecoded;
       const created = await this.exec({
         ...req.body,
-        codigoPessoa: user.codigo,
+        pessoaCodigo: user.codigo,
       });
 
       return res.status(201).json({ message: created });
@@ -26,6 +26,9 @@ class CreatePedidoController {
     if (!data.pessoaCodigo) throw new Error("Usuário é obrigatório");
     if (!data.metodoPagamento) {
       throw new Error("Método de pagamento é obrigatório");
+    }
+    if (![1, 2].includes(data.metodoPagamento)) {
+      throw new Error("Método de pagamento inválido");
     }
     if (!data.itens?.length) {
       throw new Error(
