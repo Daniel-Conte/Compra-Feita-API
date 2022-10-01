@@ -17,6 +17,15 @@ export type Produto = {
 export type CreateProdutoDTO = Omit<
   Produto,
   "codigo" | "criadoEm" | "atualizadoEm"
->;
+> & {
+  imagens?: {
+    imagem: string;
+  }[];
+};
 
-export type UpdateProdutoDTO = Omit<Produto, "criadoEm" | "atualizadoEm">;
+export type UpdateProdutoDTO = Omit<Produto, "criadoEm" | "atualizadoEm"> & {
+  imagens?: {
+    codigo?: number;
+    imagem: string;
+  }[];
+};
