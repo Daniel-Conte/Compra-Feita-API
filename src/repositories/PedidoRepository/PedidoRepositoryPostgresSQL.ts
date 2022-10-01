@@ -44,10 +44,33 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
   }
 
   async confirmar(codigo: number): Promise<void> {
+    const itensPedido = await prismaClient.itensPedido.findMany({
+      select: {
+        quantidade: true,
+        produto: { select: { codigo: true, estoque: true, nome: true } },
+      },
+      where: { codigoPedido: codigo },
+    });
+
+    itensPedido.forEach((item) => {
+      if (item.quantidade > item.produto.estoque) {
+        throw new Error(`Estoque insuficiente para ${item.produto.nome}`);
+      }
+    });
+
     await prismaClient.pedido.update({
       data: { status: 1 },
       where: { codigo },
     });
+
+    await Promise.all(
+      itensPedido.map(async (item) =>
+        prismaClient.produto.update({
+          data: { estoque: { decrement: item.quantidade } },
+          where: { codigo: item.produto.codigo },
+        })
+      )
+    );
   }
 
   async negar(codigo: number, justificativa: string): Promise<void> {
@@ -58,10 +81,27 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
   }
 
   async cancelar(codigo: number, justificativa: string): Promise<void> {
+    const itensPedido = await prismaClient.itensPedido.findMany({
+      select: {
+        quantidade: true,
+        produto: { select: { codigo: true } },
+      },
+      where: { codigoPedido: codigo },
+    });
+
     await prismaClient.pedido.update({
       data: { status: 3, justificativaCancelamento: justificativa },
       where: { codigo },
     });
+
+    await Promise.all(
+      itensPedido.map(async (item) =>
+        prismaClient.produto.update({
+          data: { estoque: { increment: item.quantidade } },
+          where: { codigo: item.produto.codigo },
+        })
+      )
+    );
   }
 
   async iniciar(codigo: number): Promise<void> {
