@@ -25,8 +25,9 @@ class AuthTokenProviderJWT implements IAuthTokenProvider {
   validateAuthToken(token: string, authSecret = this.authSecret): boolean {
     try {
       const decoded: AuthTokenDecoded = jwt.decode(token, authSecret);
+      const now = Date.now();
 
-      if (new Date(decoded.exp) > new Date()) {
+      if (now + decoded.exp > now) {
         return true;
       } else {
         return false;
