@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import type IPessoaRepository from "@repositories/PessoaRepository/IPessoaRepository";
 import type IAuthTokenProvider from "@providers/authToken/IAuthTokenProvider";
 import type { UpdatePessoaDTO } from "@modelTypes/pessoa";
+import type { AuthTokenDecoded } from "@modelTypes/auth";
 import validateEmail from "@utils/validateEmail";
 
 class UpdatePessoaController {
@@ -14,7 +15,12 @@ class UpdatePessoaController {
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
       const isSessionUser = !!req.query.sessionUser;
-      const updated = await this.exec(req.body, isSessionUser);
+      const user = req.user as AuthTokenDecoded;
+      const payload = req.body;
+
+      if (!user?.admin) payload.admin = 0;
+
+      const updated = await this.exec(payload, isSessionUser);
 
       return res.status(200).json(updated);
     } catch (error) {

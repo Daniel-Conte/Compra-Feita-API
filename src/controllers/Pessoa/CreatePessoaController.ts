@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 
-import IPessoaRepository from "@repositories/PessoaRepository/IPessoaRepository";
-import IPasswordProvider from "@providers/password/IPasswordProvider";
-import { CreatePessoaDTO } from "@modelTypes/pessoa";
+import type IPessoaRepository from "@repositories/PessoaRepository/IPessoaRepository";
+import type IPasswordProvider from "@providers/password/IPasswordProvider";
+import type { CreatePessoaDTO } from "@modelTypes/pessoa";
+import type { AuthTokenDecoded } from "@modelTypes/auth";
 import validateEmail from "@utils/validateEmail";
 
 class CreatePessoaController {
@@ -13,9 +14,10 @@ class CreatePessoaController {
 
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
+      const user = req.user as AuthTokenDecoded | undefined;
       const pessoa: CreatePessoaDTO = { ...req.body };
 
-      pessoa.admin = 0;
+      if (!user?.admin) pessoa.admin = 0;
 
       const created = await this.exec(pessoa);
 
