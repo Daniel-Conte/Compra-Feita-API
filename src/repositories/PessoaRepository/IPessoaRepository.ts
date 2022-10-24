@@ -10,7 +10,7 @@ interface IPessoaRepository {
   getById(codigo: number): Promise<Pessoa | null>;
   getByEmail(email: string): Promise<Pessoa | null>;
   insert(pessoa: CreatePessoaDTO): Promise<void>;
-  update(pessoa: UpdatePessoaDTO): Promise<void>;
+  update(pessoa: UpdatePessoaDTO): Promise<Pessoa>;
   delete(codigo: number): Promise<void>;
 }
 

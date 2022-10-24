@@ -1,5 +1,7 @@
 import PessoaRepositoryInMemory from "@repositories/PessoaRepository/PessoaRepositoryInMemory";
 import PasswordProviderBCrypt from "@providers/password/PasswordProviderBCrypt";
+import AuthTokenProviderJWT from "@providers/authToken/AuthTokenProviderJWT";
+import { authSecret } from "@config/index";
 import CreatePessoaController from "@controllers/Pessoa/CreatePessoaController";
 import ListPessoaController from "@controllers/Pessoa/ListPessoaController";
 import { CreatePessoaDTO, UpdatePessoaDTO } from "@modelTypes/pessoa";
@@ -9,13 +11,20 @@ import DeletePessoaController from "@controllers/Pessoa/DeletePessoaController";
 
 const pessoaRepoInMemory = new PessoaRepositoryInMemory();
 const passwordProviderBCrypt = new PasswordProviderBCrypt();
+const authTokenProviderJWT = new AuthTokenProviderJWT(
+  authSecret,
+  Date.now() * 1000 * 10
+);
 
 const createPessoaController = new CreatePessoaController(
   pessoaRepoInMemory,
   passwordProviderBCrypt
 );
 const listPessoaController = new ListPessoaController(pessoaRepoInMemory);
-const updatePessoaController = new UpdatePessoaController(pessoaRepoInMemory);
+const updatePessoaController = new UpdatePessoaController(
+  pessoaRepoInMemory,
+  authTokenProviderJWT
+);
 const getPessoaController = new GetPessoaController(pessoaRepoInMemory);
 const deletePessoaController = new DeletePessoaController(pessoaRepoInMemory);
 
@@ -122,7 +131,7 @@ describe("Pessoa Fluxo", () => {
       admin: 1,
     };
 
-    const res = await updatePessoaController.exec(pessoa);
+    const res = await updatePessoaController.exec(pessoa, false);
 
     expect(res).toEqual("Usuário alterado com sucesso");
   });

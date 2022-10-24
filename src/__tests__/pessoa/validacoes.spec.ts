@@ -1,5 +1,7 @@
 import PessoaRepositoryInMemory from "@repositories/PessoaRepository/PessoaRepositoryInMemory";
 import PasswordProviderBCrypt from "@providers/password/PasswordProviderBCrypt";
+import AuthTokenProviderJWT from "@providers/authToken/AuthTokenProviderJWT";
+import { authSecret } from "@config/index";
 import { CreatePessoaDTO, UpdatePessoaDTO } from "@modelTypes/pessoa";
 import CreatePessoaController from "@controllers/Pessoa/CreatePessoaController";
 import UpdatePessoaController from "@controllers/Pessoa/UpdatePessoaController";
@@ -8,12 +10,19 @@ import DeletePessoaController from "@controllers/Pessoa/DeletePessoaController";
 
 const pessoaRepoInMemory = new PessoaRepositoryInMemory();
 const passwordProviderBCrypt = new PasswordProviderBCrypt();
+const authTokenProviderJWT = new AuthTokenProviderJWT(
+  authSecret,
+  Date.now() * 1000 * 10
+);
 
 const createPessoaController = new CreatePessoaController(
   pessoaRepoInMemory,
   passwordProviderBCrypt
 );
-const updatePessoaController = new UpdatePessoaController(pessoaRepoInMemory);
+const updatePessoaController = new UpdatePessoaController(
+  pessoaRepoInMemory,
+  authTokenProviderJWT
+);
 const getPessoaController = new GetPessoaController(pessoaRepoInMemory);
 const deletePessoaController = new DeletePessoaController(pessoaRepoInMemory);
 
@@ -130,7 +139,7 @@ describe("Pessoa Validações", () => {
     };
 
     try {
-      await updatePessoaController.exec(pessoa);
+      await updatePessoaController.exec(pessoa, false);
 
       throw new Error("Falhou");
     } catch (error) {
@@ -148,7 +157,7 @@ describe("Pessoa Validações", () => {
     };
 
     try {
-      await updatePessoaController.exec(pessoa);
+      await updatePessoaController.exec(pessoa, false);
 
       throw new Error("Falhou");
     } catch (error) {
@@ -166,7 +175,7 @@ describe("Pessoa Validações", () => {
     };
 
     try {
-      await updatePessoaController.exec(pessoa);
+      await updatePessoaController.exec(pessoa, false);
 
       throw new Error("Falhou");
     } catch (error) {
@@ -184,7 +193,7 @@ describe("Pessoa Validações", () => {
     };
 
     try {
-      await updatePessoaController.exec(pessoa);
+      await updatePessoaController.exec(pessoa, false);
 
       throw new Error("Falhou");
     } catch (error) {
@@ -202,7 +211,7 @@ describe("Pessoa Validações", () => {
     };
 
     try {
-      await updatePessoaController.exec(pessoa);
+      await updatePessoaController.exec(pessoa, false);
 
       throw new Error("Falhou");
     } catch (error) {

@@ -34,8 +34,8 @@ class PessoaRepositoryPostgresSQL implements IPessoaRepository {
     await prismaClient.pessoa.create({ data: pessoa });
   }
 
-  async update(pessoa: UpdatePessoaDTO): Promise<void> {
-    await prismaClient.pessoa.update({
+  async update(pessoa: UpdatePessoaDTO): Promise<Pessoa> {
+    return await prismaClient.pessoa.update({
       data: pessoa,
       where: { codigo: pessoa.codigo },
     });
