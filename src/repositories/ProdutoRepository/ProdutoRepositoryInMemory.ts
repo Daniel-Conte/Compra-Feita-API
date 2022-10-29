@@ -1,6 +1,7 @@
-import {
+import type {
   CreateProdutoDTO,
   Produto,
+  ProdutoListItem,
   UpdateProdutoDTO,
 } from "@modelTypes/produto";
 import IProdutoRepository from "./IProdutoRepository";
@@ -8,8 +9,8 @@ import IProdutoRepository from "./IProdutoRepository";
 class ProdutoRepositoryInMemory implements IProdutoRepository {
   private produtos: Produto[] = [];
 
-  async getAll(): Promise<Produto[]> {
-    return this.produtos;
+  async getAll(): Promise<ProdutoListItem[]> {
+    return this.produtos.map((produto) => ({ ...produto, imagem: "" }));
   }
 
   async getById(codigo: number): Promise<Produto | null> {

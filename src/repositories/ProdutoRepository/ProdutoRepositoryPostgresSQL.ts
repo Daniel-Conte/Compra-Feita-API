@@ -1,14 +1,27 @@
 import prismaClient from "@database/prismaClient";
-import {
+import type {
   CreateProdutoDTO,
   Produto,
+  ProdutoListItem,
   UpdateProdutoDTO,
 } from "@modelTypes/produto";
 import IProdutoRepository from "./IProdutoRepository";
 
 class ProdutoRepositoryPostgresSQL implements IProdutoRepository {
-  async getAll(): Promise<Produto[]> {
-    return prismaClient.produto.findMany();
+  async getAll(): Promise<ProdutoListItem[]> {
+    const produtos = await prismaClient.produto.findMany({
+      select: {
+        codigo: true,
+        precoUnitario: true,
+        nome: true,
+        imagens: { select: { imagem: true }, take: 1 },
+      },
+    });
+
+    return produtos.map(({ imagens, ...produto }) => ({
+      ...produto,
+      imagem: imagens?.[0]?.imagem,
+    }));
   }
 
   async getById(codigo: number): Promise<Produto | null> {

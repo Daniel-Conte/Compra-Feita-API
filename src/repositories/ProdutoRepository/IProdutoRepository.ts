@@ -1,11 +1,12 @@
 import {
   CreateProdutoDTO,
   Produto,
+  ProdutoListItem,
   UpdateProdutoDTO,
 } from "@modelTypes/produto";
 
 interface ProdutoRepository {
-  getAll(): Promise<Produto[]>;
+  getAll(): Promise<ProdutoListItem[]>;
   getById(codigo: number): Promise<Produto | null>;
   getByName(name: string): Promise<Produto | null>;
   insert(produto: CreateProdutoDTO): Promise<void>;

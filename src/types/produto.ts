@@ -14,6 +14,13 @@ export type Produto = {
   codigoCategoria: number;
 };
 
+export type ProdutoListItem = Pick<
+  Produto,
+  "codigo" | "nome" | "precoUnitario"
+> & {
+  imagem: string;
+};
+
 export type CreateProdutoDTO = Omit<
   Produto,
   "codigo" | "criadoEm" | "atualizadoEm"
