@@ -1,9 +1,13 @@
+import type { Categoria } from "./categoria";
+
 export type Produto = {
   codigo: number;
   nome: string;
   descricao: string;
   precoUnitario: number;
   estoque: number;
+  categoria: Omit<Categoria, "criadoEm" | "atualizadoEm">;
+  imagens: string[];
   altura: number | null;
   comprimento: number | null;
   largura: number | null;
@@ -11,7 +15,6 @@ export type Produto = {
   modelo: string | null;
   criadoEm: Date;
   atualizadoEm: Date;
-  codigoCategoria: number;
 };
 
 export type ProdutoListItem = Pick<
@@ -23,14 +26,19 @@ export type ProdutoListItem = Pick<
 
 export type CreateProdutoDTO = Omit<
   Produto,
-  "codigo" | "criadoEm" | "atualizadoEm"
+  "codigo" | "criadoEm" | "atualizadoEm" | "categoria" | "imagens"
 > & {
+  codigoCategoria: number;
   imagens?: {
     imagem: string;
   }[];
 };
 
-export type UpdateProdutoDTO = Omit<Produto, "criadoEm" | "atualizadoEm"> & {
+export type UpdateProdutoDTO = Omit<
+  Produto,
+  "criadoEm" | "atualizadoEm" | "categoria" | "imagens"
+> & {
+  codigoCategoria: number;
   imagens?: {
     codigo?: number;
     imagem: string;

@@ -25,13 +25,73 @@ class ProdutoRepositoryPostgresSQL implements IProdutoRepository {
   }
 
   async getById(codigo: number): Promise<Produto | null> {
-    return prismaClient.produto.findFirst({ where: { codigo } });
+    const produto = await prismaClient.produto.findUnique({
+      select: {
+        codigo: true,
+        nome: true,
+        descricao: true,
+        precoUnitario: true,
+        estoque: true,
+        categoria: {
+          select: {
+            codigo: true,
+            codigoCategoriaPai: true,
+            nome: true,
+            descricao: true,
+          },
+        },
+        imagens: { select: { imagem: true } },
+        altura: true,
+        comprimento: true,
+        largura: true,
+        marca: true,
+        modelo: true,
+        criadoEm: true,
+        atualizadoEm: true,
+      },
+      where: { codigo },
+    });
+
+    if (produto) {
+      produto.imagens = produto.imagens.map((img) => img.imagem) as any;
+    }
+
+    return produto as Produto | null;
   }
 
   async getByName(name: string): Promise<Produto | null> {
-    return prismaClient.produto.findFirst({
+    const produto = await prismaClient.produto.findFirst({
+      select: {
+        codigo: true,
+        nome: true,
+        descricao: true,
+        precoUnitario: true,
+        estoque: true,
+        categoria: {
+          select: {
+            codigo: true,
+            codigoCategoriaPai: true,
+            nome: true,
+            descricao: true,
+          },
+        },
+        imagens: { select: { imagem: true } },
+        altura: true,
+        comprimento: true,
+        largura: true,
+        marca: true,
+        modelo: true,
+        criadoEm: true,
+        atualizadoEm: true,
+      },
       where: { nome: name },
     });
+
+    if (produto) {
+      produto.imagens = produto.imagens.map((img) => img.imagem) as any;
+    }
+
+    return produto as Produto | null;
   }
 
   async insert(produto: CreateProdutoDTO): Promise<void> {

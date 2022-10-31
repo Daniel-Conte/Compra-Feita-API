@@ -31,7 +31,7 @@ class ProdutoRepositoryInMemory implements IProdutoRepository {
       codigo,
       criadoEm: new Date(),
       atualizadoEm: new Date(),
-    });
+    } as any);
   }
 
   async update(produto: UpdateProdutoDTO): Promise<void> {
@@ -39,7 +39,7 @@ class ProdutoRepositoryInMemory implements IProdutoRepository {
     const found = this.produtos[index];
     const newProduto = { ...found, ...produto };
 
-    this.produtos.splice(index, 1, newProduto);
+    this.produtos.splice(index, 1, newProduto as Produto);
   }
 
   async delete(codigo: number): Promise<void> {

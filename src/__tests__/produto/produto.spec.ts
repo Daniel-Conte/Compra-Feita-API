@@ -124,11 +124,11 @@ describe("Produto Fluxo", () => {
 
     expect(res).toEqual(
       expect.arrayContaining([
-        expect.objectContaining<Produto>({
+        expect.objectContaining({
           codigo: expect.any(Number),
           nome: expect.any(String),
           altura: (expect as any).toBeTypeOrNull(Number),
-          codigoCategoria: expect.any(Number),
+          categoria: expect.any(Object),
           comprimento: (expect as any).toBeTypeOrNull(Number),
           descricao: expect.any(String),
           estoque: expect.any(Number),
@@ -197,7 +197,7 @@ describe("Produto Fluxo", () => {
 
     expect(res).toEqual(
       expect.arrayContaining([
-        expect.objectContaining<Produto>({
+        expect.objectContaining({
           codigo: expect.any(Number),
           nome: "produto2",
           codigoCategoria: 2,
