@@ -1,10 +1,17 @@
 import prismaClient from "@database/prismaClient";
-import { Categoria } from "@modelTypes/categoria";
+import { CategoriaListItem } from "@modelTypes/categoria";
 import ICategoriaRepository from "./ICategoriaRepository";
 
 class CategoriaRepositoryPostgresSQL implements ICategoriaRepository {
-  async getAll(): Promise<Categoria[]> {
-    return prismaClient.categoria.findMany();
+  async getAll(): Promise<CategoriaListItem[]> {
+    return prismaClient.categoria.findMany({
+      select: {
+        codigo: true,
+        nome: true,
+        descricao: true,
+        codigoCategoriaPai: true,
+      },
+    });
   }
 }
 

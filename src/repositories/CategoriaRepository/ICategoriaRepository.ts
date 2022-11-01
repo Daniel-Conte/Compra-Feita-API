@@ -1,7 +1,7 @@
-import { Categoria } from "@modelTypes/categoria";
+import { CategoriaListItem } from "@modelTypes/categoria";
 
 interface CategoriaRepository {
-  getAll(): Promise<Categoria[]>;
+  getAll(): Promise<CategoriaListItem[]>;
 }
 
 export default CategoriaRepository;

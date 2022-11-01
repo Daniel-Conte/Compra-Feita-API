@@ -6,3 +6,5 @@ export type Categoria = {
   criadoEm: Date;
   atualizadoEm: Date;
 };
+
+export type CategoriaListItem = Omit<Categoria, "criadoEm" | "atualizadoEm">;
