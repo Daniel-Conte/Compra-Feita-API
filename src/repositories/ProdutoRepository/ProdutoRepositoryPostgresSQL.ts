@@ -40,7 +40,7 @@ class ProdutoRepositoryPostgresSQL implements IProdutoRepository {
             descricao: true,
           },
         },
-        imagens: { select: { imagem: true } },
+        imagens: { select: { codigo: true, imagem: true } },
         altura: true,
         comprimento: true,
         largura: true,
@@ -52,11 +52,7 @@ class ProdutoRepositoryPostgresSQL implements IProdutoRepository {
       where: { codigo },
     });
 
-    if (produto) {
-      produto.imagens = produto.imagens.map((img) => img.imagem) as any;
-    }
-
-    return produto as Produto | null;
+    return produto;
   }
 
   async getByName(name: string): Promise<Produto | null> {
@@ -75,7 +71,7 @@ class ProdutoRepositoryPostgresSQL implements IProdutoRepository {
             descricao: true,
           },
         },
-        imagens: { select: { imagem: true } },
+        imagens: { select: { codigo: true, imagem: true } },
         altura: true,
         comprimento: true,
         largura: true,
@@ -87,11 +83,7 @@ class ProdutoRepositoryPostgresSQL implements IProdutoRepository {
       where: { nome: name },
     });
 
-    if (produto) {
-      produto.imagens = produto.imagens.map((img) => img.imagem) as any;
-    }
-
-    return produto as Produto | null;
+    return produto;
   }
 
   async insert(produto: CreateProdutoDTO): Promise<void> {

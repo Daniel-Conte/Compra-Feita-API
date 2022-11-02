@@ -1,4 +1,5 @@
 import type { Categoria } from "./categoria";
+import type { ImagemProduto } from "./imagemProduto";
 
 export type Produto = {
   codigo: number;
@@ -7,7 +8,7 @@ export type Produto = {
   precoUnitario: number;
   estoque: number;
   categoria: Omit<Categoria, "criadoEm" | "atualizadoEm">;
-  imagens: string[];
+  imagens: Pick<ImagemProduto, "codigo" | "imagem">[];
   altura: number | null;
   comprimento: number | null;
   largura: number | null;
@@ -29,9 +30,7 @@ export type CreateProdutoDTO = Omit<
   "codigo" | "criadoEm" | "atualizadoEm" | "categoria" | "imagens"
 > & {
   codigoCategoria: number;
-  imagens?: {
-    imagem: string;
-  }[];
+  imagens?: Pick<ImagemProduto, "imagem">[];
 };
 
 export type UpdateProdutoDTO = Omit<
