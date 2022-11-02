@@ -107,5 +107,5 @@ model ImagemProduto {
   criadoEm      DateTime @default(now())
   atualizadoEm  DateTime @updatedAt
   codigoProduto Int
-  produto       Produto  @relation(fields: [codigoProduto], references: [codigo])
+  produto       Produto  @relation(fields: [codigoProduto], references: [codigo], onDelete: Cascade)
 }
