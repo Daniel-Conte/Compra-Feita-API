@@ -10,6 +10,11 @@ export type ItemPedido = {
   codigoPedido: number | null;
 };
 
+export type ItemPedidoListItem = Pick<
+  ItemPedido,
+  "codigo" | "nomeProduto" | "precoUnitario" | "quantidade"
+>;
+
 export type CreateItemPedidoDTO = Omit<
   ItemPedido,
   "codigo" | "criadoEm" | "atualizadoEm" | "codigoPedido"

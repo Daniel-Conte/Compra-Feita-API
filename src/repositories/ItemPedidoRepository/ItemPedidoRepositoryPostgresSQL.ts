@@ -1,18 +1,27 @@
 import prismaClient from "@database/prismaClient";
-import {
+import type {
   CreateItemPedidoDTO,
   ItemPedido,
+  ItemPedidoListItem,
   UpdateQuantidadeItemPedidoDTO,
 } from "@modelTypes/itemPedido";
-import IItemPedidoRepository from "./IItemPedidoRepository";
+import type IItemPedidoRepository from "./IItemPedidoRepository";
 
 class ItemPedidoRepositoryPostgresSQL implements IItemPedidoRepository {
   async getAll(codigoPessoa: number): Promise<ItemPedido[]> {
     return prismaClient.itensPedido.findMany({ where: { codigoPessoa } });
   }
 
-  async getCarrinhoCompras(codigoPessoa: number): Promise<ItemPedido[]> {
+  async getCarrinhoCompras(
+    codigoPessoa: number
+  ): Promise<ItemPedidoListItem[]> {
     return prismaClient.itensPedido.findMany({
+      select: {
+        codigo: true,
+        nomeProduto: true,
+        precoUnitario: true,
+        quantidade: true,
+      },
       where: { codigoPessoa, AND: { codigoPedido: null } },
     });
   }
