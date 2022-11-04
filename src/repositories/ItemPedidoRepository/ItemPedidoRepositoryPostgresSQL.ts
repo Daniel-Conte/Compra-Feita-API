@@ -23,6 +23,7 @@ class ItemPedidoRepositoryPostgresSQL implements IItemPedidoRepository {
         quantidade: true,
       },
       where: { codigoPessoa, AND: { codigoPedido: null } },
+      orderBy: { codigo: "asc" },
     });
   }
 
