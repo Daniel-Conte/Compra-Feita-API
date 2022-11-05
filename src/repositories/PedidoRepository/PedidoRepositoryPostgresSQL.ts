@@ -21,6 +21,7 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
         itensPedido: true,
         justificativaCancelamento: true,
         metodoPagamento: true,
+        pagamentoDinheiro: true,
         pessoaCodigo: true,
         status: true,
       },
@@ -29,11 +30,18 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
   }
 
   async insert(pedido: CreatePedidoDTO): Promise<void> {
-    const { pessoaCodigo, enderecoCodigo, metodoPagamento, itens } = pedido;
+    const {
+      pessoaCodigo,
+      enderecoCodigo,
+      metodoPagamento,
+      pagamentoDinheiro,
+      itens,
+    } = pedido;
 
     await prismaClient.pedido.create({
       data: {
         metodoPagamento,
+        pagamentoDinheiro,
         endereco: { connect: { codigo: enderecoCodigo } },
         pessoa: { connect: { codigo: pessoaCodigo } },
         itensPedido: {
