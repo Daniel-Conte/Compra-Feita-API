@@ -17,11 +17,11 @@ const pedidoRouter = Router();
 
 pedidoRouter
   .use(jwtAuthenticator)
+  .post("/", (...args) => createPedidoController.handle(...args))
   .put("/cancelar/:id", (...args) => cancelarPedidoController.handle(...args))
   .use(adminValidator)
   .get("/", (...args) => listPedidoController.handle(...args))
   .get("/:id", (...args) => getPedidoController.handle(...args))
-  .post("/", (...args) => createPedidoController.handle(...args))
   .put("/confirmar/:id", (...args) => confirmarPedidoController.handle(...args))
   .put("/finalizar/:id", (...args) => finalizarPedidoController.handle(...args))
   .put("/iniciar/:id", (...args) => iniciarPedidoController.handle(...args))
