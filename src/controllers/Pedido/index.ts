@@ -2,6 +2,7 @@ import PedidoRepositoryPostgresSQL from "@repositories/PedidoRepository/PedidoRe
 import CreatePedidoController from "./CreatePedidoController";
 import GetPedidoController from "./GetPedidoController";
 import ListPedidoController from "./ListPedidoController";
+import ListPedidoByUserController from "./ListPedidoByUserController";
 import CancelarPedidoController from "./CancelarPedidoController";
 import ConfirmarPedidoController from "./ConfirmarPedidoController";
 import FinalizarPedidoController from "./FinalizarPedidoController";
@@ -14,6 +15,9 @@ export const createPedidoController = new CreatePedidoController(
   pedidoRepositoryPostgresSQL
 );
 export const listPedidoController = new ListPedidoController(
+  pedidoRepositoryPostgresSQL
+);
+export const listPedidoByUserController = new ListPedidoByUserController(
   pedidoRepositoryPostgresSQL
 );
 export const getPedidoController = new GetPedidoController(

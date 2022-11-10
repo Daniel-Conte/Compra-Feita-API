@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   createPedidoController,
   getPedidoController,
+  listPedidoByUserController,
   listPedidoController,
   cancelarPedidoController,
   confirmarPedidoController,
@@ -18,6 +19,7 @@ const pedidoRouter = Router();
 pedidoRouter
   .use(jwtAuthenticator)
   .post("/", (...args) => createPedidoController.handle(...args))
+  .get("/usuario", (...args) => listPedidoByUserController.handle(...args))
   .put("/cancelar/:id", (...args) => cancelarPedidoController.handle(...args))
   .use(adminValidator)
   .get("/", (...args) => listPedidoController.handle(...args))
