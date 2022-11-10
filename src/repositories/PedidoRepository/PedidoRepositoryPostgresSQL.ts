@@ -1,18 +1,59 @@
 import prismaClient from "@database/prismaClient";
-import { CreatePedidoDTO, Pedido, PedidoFull } from "@modelTypes/pedido";
-import IPedidoRepository from "./IPedidoRepository";
+import type {
+  CreatePedidoDTO,
+  Pedido,
+  PedidoListItem,
+} from "@modelTypes/pedido";
+import type IPedidoRepository from "./IPedidoRepository";
 
 class PedidoRepositoryPostgresSQL implements IPedidoRepository {
-  async getAll(): Promise<Pedido[]> {
-    return prismaClient.pedido.findMany();
+  async getAll(): Promise<PedidoListItem[]> {
+    const pedidos = await prismaClient.pedido.findMany({
+      select: {
+        codigo: true,
+        data: true,
+        status: true,
+        itensPedido: true,
+      },
+      orderBy: { codigo: "desc" },
+    });
+
+    const newPedidos = pedidos.map(({ itensPedido, ...pedido }) => ({
+      ...pedido,
+      valorTotal: itensPedido.reduce(
+        (total, curr) => (total += curr.precoUnitario * curr.quantidade),
+        0
+      ),
+    })) as PedidoListItem[];
+
+    return newPedidos;
   }
 
-  async getByUser(pessoaCodigo: number): Promise<Pedido[]> {
-    return prismaClient.pedido.findMany({ where: { pessoaCodigo } });
+  async getByUser(pessoaCodigo: number): Promise<PedidoListItem[]> {
+    const pedidos = await prismaClient.pedido.findMany({
+      select: {
+        codigo: true,
+        data: true,
+        status: true,
+        itensPedido: true,
+      },
+      orderBy: { codigo: "desc" },
+      where: { pessoaCodigo },
+    });
+
+    const newPedidos = pedidos.map(({ itensPedido, ...pedido }) => ({
+      ...pedido,
+      valorTotal: itensPedido.reduce(
+        (total, curr) => (total += curr.precoUnitario * curr.quantidade),
+        0
+      ),
+    })) as PedidoListItem[];
+
+    return newPedidos;
   }
 
-  async getById(codigo: number): Promise<PedidoFull | null> {
-    return prismaClient.pedido.findUnique({
+  async getById(codigo: number): Promise<Pedido | null> {
+    const pedido = await prismaClient.pedido.findUnique({
       select: {
         codigo: true,
         data: true,
@@ -24,9 +65,13 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
         pagamentoDinheiro: true,
         pessoaCodigo: true,
         status: true,
+        endereco: true,
+        pessoa: true,
       },
       where: { codigo },
     });
+
+    return pedido as Pedido;
   }
 
   async insert(pedido: CreatePedidoDTO): Promise<void> {
