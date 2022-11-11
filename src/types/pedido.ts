@@ -9,15 +9,20 @@ export type Pedido = {
   data: Date;
   status: PedidoStatus;
   justificativaCancelamento?: string;
+  valorTotal: number;
   atualizadoEm: Date;
-  pessoa: Pick<Pessoa, "codigo" | "nome">;
-  endereco: Pick<Endereco, "codigo" | "rua" | "numero" | "bairro" | "cidade">;
+  pessoa: Pick<Pessoa, "codigo" | "nome" | "email" | "telefone">;
+  endereco: Pick<
+    Endereco,
+    "rua" | "numero" | "bairro" | "cidade" | "complemento"
+  >;
   itensPedido: ItemPedido[];
 };
 
-export type PedidoListItem = Pick<Pedido, "codigo" | "data" | "status"> & {
-  valorTotal: number;
-};
+export type PedidoListItem = Pick<
+  Pedido,
+  "codigo" | "data" | "status" | "valorTotal"
+>;
 
 // 0 -> Realizado;
 // 1 -> Confirmado;

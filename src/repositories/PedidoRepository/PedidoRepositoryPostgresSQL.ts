@@ -65,13 +65,31 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
         pagamentoDinheiro: true,
         pessoaCodigo: true,
         status: true,
-        endereco: true,
-        pessoa: true,
+        endereco: {
+          select: {
+            rua: true,
+            numero: true,
+            bairro: true,
+            cidade: true,
+            complemento: true,
+          },
+        },
+        pessoa: {
+          select: { codigo: true, nome: true, email: true, telefone: true },
+        },
       },
       where: { codigo },
     });
 
-    return pedido as Pedido;
+    const valorTotal =
+      pedido?.itensPedido.reduce(
+        (total, curr) => (total += curr.precoUnitario * curr.quantidade),
+        0
+      ) || 0;
+
+    const newPedido = pedido ? { ...pedido, valorTotal } : null;
+
+    return newPedido as Pedido;
   }
 
   async insert(pedido: CreatePedidoDTO): Promise<void> {
