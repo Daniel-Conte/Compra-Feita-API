@@ -9,6 +9,7 @@ interface PedidoRepository {
   iniciar(codigo: number): Promise<void>;
   cancelar(codigo: number, justificativa: string): Promise<void>;
   negar(codigo: number, justificativa: string): Promise<void>;
+  entregar(codigo: number): Promise<void>;
   finalizar(codigo: number): Promise<void>;
 }
 

@@ -187,9 +187,16 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
     });
   }
 
-  async finalizar(codigo: number): Promise<void> {
+  async entregar(codigo: number): Promise<void> {
     await prismaClient.pedido.update({
       data: { status: 5 },
+      where: { codigo },
+    });
+  }
+
+  async finalizar(codigo: number): Promise<void> {
+    await prismaClient.pedido.update({
+      data: { status: 6 },
       where: { codigo },
     });
   }

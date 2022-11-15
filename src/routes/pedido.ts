@@ -7,6 +7,7 @@ import {
   listPedidoController,
   cancelarPedidoController,
   confirmarPedidoController,
+  entregarPedidoController,
   finalizarPedidoController,
   iniciarPedidoController,
   negarPedidoController,
@@ -25,6 +26,7 @@ pedidoRouter
   .use(adminValidator)
   .get("/", (...args) => listPedidoController.handle(...args))
   .put("/confirmar/:id", (...args) => confirmarPedidoController.handle(...args))
+  .put("/entregar/:id", (...args) => entregarPedidoController.handle(...args))
   .put("/finalizar/:id", (...args) => finalizarPedidoController.handle(...args))
   .put("/iniciar/:id", (...args) => iniciarPedidoController.handle(...args))
   .put("/negar/:id", (...args) => negarPedidoController.handle(...args));

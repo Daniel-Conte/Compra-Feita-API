@@ -29,8 +29,9 @@ export type PedidoListItem = Pick<
 // 2 -> Negado
 // 3 -> Cancelado
 // 4 -> Iniciado
-// 5 -> Finalizado
-export type PedidoStatus = 0 | 1 | 2 | 3 | 4 | 5;
+// 5 -> Saiu para entrega
+// 6 -> Finalizado
+export type PedidoStatus = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 // 1 -> Cartão
 // 2 -> Dinheiro

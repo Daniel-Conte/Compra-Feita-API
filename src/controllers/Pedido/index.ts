@@ -5,6 +5,7 @@ import ListPedidoController from "./ListPedidoController";
 import ListPedidoByUserController from "./ListPedidoByUserController";
 import CancelarPedidoController from "./CancelarPedidoController";
 import ConfirmarPedidoController from "./ConfirmarPedidoController";
+import EntregarPedidoController from "./EntregarPedidoController";
 import FinalizarPedidoController from "./FinalizarPedidoController";
 import IniciarPedidoController from "./IniciarPedidoController";
 import NegarPedidoController from "./NegarPedidoController";
@@ -27,6 +28,9 @@ export const cancelarPedidoController = new CancelarPedidoController(
   pedidoRepositoryPostgresSQL
 );
 export const confirmarPedidoController = new ConfirmarPedidoController(
+  pedidoRepositoryPostgresSQL
+);
+export const entregarPedidoController = new EntregarPedidoController(
   pedidoRepositoryPostgresSQL
 );
 export const finalizarPedidoController = new FinalizarPedidoController(
