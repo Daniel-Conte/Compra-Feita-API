@@ -26,7 +26,7 @@ class CancelarPedidoController {
     const pedido = await this.pedidoRepository.getById(codigo);
 
     if (!pedido) throw new Error("Pedido não encontrado");
-    if (![1, 4].includes(pedido.status))
+    if (![0, 1, 4].includes(pedido.status))
       throw new Error("Pedido não pode ser cancelado");
 
     await this.pedidoRepository.cancelar(codigo, justificativa);

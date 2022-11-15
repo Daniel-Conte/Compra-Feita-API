@@ -156,6 +156,7 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
       select: {
         quantidade: true,
         produto: { select: { codigo: true } },
+        pedido: { select: { status: true } },
       },
       where: { codigoPedido: codigo },
     });
@@ -168,7 +169,11 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
     await Promise.all(
       itensPedido.map(async (item) =>
         prismaClient.produto.update({
-          data: { estoque: { increment: item.quantidade } },
+          data: {
+            estoque: [1, 4].includes(item.pedido!.status)
+              ? { increment: item.quantidade }
+              : undefined,
+          },
           where: { codigo: item.produto.codigo },
         })
       )
