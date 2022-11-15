@@ -17,6 +17,7 @@ model Pessoa {
   senha        String        @db.Text
   telefone     String        @db.VarChar(14)
   admin        Int           @default(0)
+  pushToken    String?       @db.Text
   criadoEm     DateTime      @default(now())
   atualizadoEm DateTime      @updatedAt
   enderecos    Endereco[]
