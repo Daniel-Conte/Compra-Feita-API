@@ -11,7 +11,7 @@ export type Pedido = {
   justificativaCancelamento?: string;
   valorTotal: number;
   atualizadoEm: Date;
-  pessoa: Pick<Pessoa, "codigo" | "nome" | "email" | "telefone">;
+  pessoa: Pick<Pessoa, "codigo" | "nome" | "email" | "telefone" | "pushToken">;
   endereco: Pick<
     Endereco,
     "rua" | "numero" | "bairro" | "cidade" | "complemento"

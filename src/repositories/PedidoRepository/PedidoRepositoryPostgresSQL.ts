@@ -75,7 +75,13 @@ class PedidoRepositoryPostgresSQL implements IPedidoRepository {
           },
         },
         pessoa: {
-          select: { codigo: true, nome: true, email: true, telefone: true },
+          select: {
+            codigo: true,
+            nome: true,
+            email: true,
+            telefone: true,
+            pushToken: true,
+          },
         },
       },
       where: { codigo },
