@@ -11,6 +11,7 @@ interface IPessoaRepository {
   getByEmail(email: string): Promise<Pessoa | null>;
   insert(pessoa: CreatePessoaDTO): Promise<void>;
   update(pessoa: UpdatePessoaDTO): Promise<Pessoa>;
+  updatePushToken(codigo: number, pushToken: string | null): Promise<void>;
   delete(codigo: number): Promise<void>;
 }
 

@@ -31,6 +31,7 @@ describe("Teste Login", () => {
       senha: "123",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     await createPessoaController.exec(pessoa);

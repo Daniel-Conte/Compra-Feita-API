@@ -35,6 +35,7 @@ describe("Pessoa Validações", () => {
       senha: "123",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -54,6 +55,7 @@ describe("Pessoa Validações", () => {
       senha: "123",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -70,6 +72,7 @@ describe("Pessoa Validações", () => {
       senha: "123",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -86,6 +89,7 @@ describe("Pessoa Validações", () => {
       senha: "123",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -102,6 +106,7 @@ describe("Pessoa Validações", () => {
       senha: "",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -118,6 +123,7 @@ describe("Pessoa Validações", () => {
       senha: "123",
       telefone: "",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -136,6 +142,7 @@ describe("Pessoa Validações", () => {
       email: "teste1@teste.com",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -154,6 +161,7 @@ describe("Pessoa Validações", () => {
       email: "teste2@teste.com",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -172,6 +180,7 @@ describe("Pessoa Validações", () => {
       email: "",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -190,6 +199,7 @@ describe("Pessoa Validações", () => {
       email: "teste2",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     try {
@@ -208,6 +218,7 @@ describe("Pessoa Validações", () => {
       email: "teste2@teste.com",
       telefone: "",
       admin: 0,
+      pushToken: null,
     };
 
     try {

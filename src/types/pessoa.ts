@@ -5,6 +5,7 @@ export type Pessoa = {
   senha: string;
   telefone: string;
   admin: number;
+  pushToken: string | null;
   criadoEm: Date;
   atualizadoEm: Date;
 };

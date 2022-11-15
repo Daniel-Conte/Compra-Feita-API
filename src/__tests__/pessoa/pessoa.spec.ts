@@ -42,6 +42,7 @@ describe("Pessoa Fluxo", () => {
       senha: "123",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     const res = await createPessoaController.exec(pessoa);
@@ -98,6 +99,7 @@ describe("Pessoa Fluxo", () => {
       senha: "456",
       telefone: "99912312312",
       admin: 1,
+      pushToken: null,
     };
 
     const res = await createPessoaController.exec(pessoa);
@@ -129,6 +131,7 @@ describe("Pessoa Fluxo", () => {
       email: "teste1Alt@teste.com",
       telefone: "999777777777",
       admin: 1,
+      pushToken: null,
     };
 
     const res = await updatePessoaController.exec(pessoa, false);

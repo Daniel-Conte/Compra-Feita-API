@@ -1,11 +1,11 @@
 import prismaClient from "@database/prismaClient";
-import {
+import type {
   CreatePessoaDTO,
   Pessoa,
   PessoaListItem,
   UpdatePessoaDTO,
 } from "@modelTypes/pessoa";
-import IPessoaRepository from "./IPessoaRepository";
+import type IPessoaRepository from "./IPessoaRepository";
 
 class PessoaRepositoryPostgresSQL implements IPessoaRepository {
   async getAll(): Promise<PessoaListItem[]> {
@@ -16,6 +16,7 @@ class PessoaRepositoryPostgresSQL implements IPessoaRepository {
         email: true,
         telefone: true,
         admin: true,
+        pushToken: true,
         criadoEm: true,
         atualizadoEm: true,
       },
@@ -38,6 +39,16 @@ class PessoaRepositoryPostgresSQL implements IPessoaRepository {
     return await prismaClient.pessoa.update({
       data: pessoa,
       where: { codigo: pessoa.codigo },
+    });
+  }
+
+  async updatePushToken(
+    codigo: number,
+    pushToken: string | null
+  ): Promise<void> {
+    await prismaClient.pessoa.update({
+      data: { pushToken },
+      where: { codigo },
     });
   }
 

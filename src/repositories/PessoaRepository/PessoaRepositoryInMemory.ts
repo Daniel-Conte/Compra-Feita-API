@@ -44,6 +44,17 @@ class PessoaRepositoryInMemory implements IPessoaRepository {
     return newPessoa;
   }
 
+  async updatePushToken(
+    codigo: number,
+    pushToken: string | null
+  ): Promise<void> {
+    const index = this.pessoas.findIndex((it) => it.codigo === codigo);
+    const found = this.pessoas[index];
+    const newPessoa = { ...found, pushToken };
+
+    this.pessoas.splice(index, 1, newPessoa);
+  }
+
   async delete(codigo: number): Promise<void> {
     this.pessoas = this.pessoas.filter((pessoa) => pessoa.codigo !== codigo);
   }

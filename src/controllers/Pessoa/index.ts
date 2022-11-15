@@ -7,6 +7,7 @@ import DeletePessoaController from "./DeletePessoaController";
 import GetPessoaController from "./GetPessoaController";
 import ListPessoaController from "./ListPessoaController";
 import UpdatePessoaController from "./UpdatePessoaController";
+import UpdatePessoaPushTokenController from "./UpdatePessoaPushTokenController";
 
 export const pessoaRepositoryPostgresSQL = new PessoaRepositoryPostgresSQL();
 const passwordProviderBCrypt = new PasswordProviderBCrypt();
@@ -23,6 +24,8 @@ export const updatePessoaController = new UpdatePessoaController(
   pessoaRepositoryPostgresSQL,
   authTokenProviderJWT
 );
+export const updatePessoaPushTokenController =
+  new UpdatePessoaPushTokenController(pessoaRepositoryPostgresSQL);
 export const getPessoaController = new GetPessoaController(
   pessoaRepositoryPostgresSQL
 );

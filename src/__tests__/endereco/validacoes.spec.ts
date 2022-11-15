@@ -38,6 +38,7 @@ describe("Endereço Validações", () => {
       senha: "123",
       telefone: "99912345678",
       admin: 0,
+      pushToken: null,
     };
 
     const res = await createPessoaController.exec(pessoa);
