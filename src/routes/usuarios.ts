@@ -5,6 +5,7 @@ import {
   getPessoaController,
   listPessoaController,
   updatePessoaController,
+  updatePessoaPushTokenController,
 } from "@controllers/Pessoa";
 import jwtAuthenticator from "@middlewares/jwtAuthenticator";
 
@@ -14,6 +15,9 @@ usuariosRouter
   .use(jwtAuthenticator)
   .get("/", (...args) => listPessoaController.handle(...args))
   .put("/", (...args) => updatePessoaController.handle(...args))
+  .put("/push-token", (...args) =>
+    updatePessoaPushTokenController.handle(...args)
+  )
   .get("/:id", (...args) => getPessoaController.handle(...args))
   .delete("/:id", (...args) => deletePessoaController.handle(...args));
 
