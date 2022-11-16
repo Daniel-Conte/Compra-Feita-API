@@ -10,7 +10,7 @@ const app = express();
 
 app.use(cors());
 passport.use(jwtStrategy);
-app.use(express.json());
+app.use(express.json({ limit: 1500000 }));
 app.use(routes);
 app.use(errorHandler);
 
